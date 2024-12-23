@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, 'Ubuntu', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+        padding: 20px;
+        background-color: #f5f5f5;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 30px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #000;
+        font-weight: 500;
+    }
+
+    .nav-links a.active {
+        border-bottom: 2px solid #000;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 40px auto;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+    }
+
+    .diagnostics-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .diagnostic-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: transform 0.2s;
+        background-color: white;
+    }
+
+    .diagnostic-item:hover {
+        transform: translateX(10px);
+        background-color: white;
+    }
+
+    .item-content {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .icon {
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .item-title {
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+
+    .add-button {
+        width: 30px;
+        height: 30px;
+        background: #000;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* Color variants for different metrics */
+    .blood-pressure:hover {
+        background-color: #F1EF96;
+    }
+
+    .glucose:hover {
+        background-color: #CEF196;
+    }
+
+    .sleep:hover {
+        background-color: #96E2F1;
+    }
+
+    .body-weight:hover {
+        background-color: #96B0F1;
+    }
+
+    .body-temperature:hover {
+        background-color: #F19696;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+    }
+
+    .hamburger div {
+        width: 25px;
+        height: 3px;
+        background-color: #000;
+        transition: transform 0.3s ease;
+    }
+
+    /* Show the hamburger and menu for small screens */
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            width: 100%;
+            justify-content: space-between;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 10px 0;
+            background-color: #fff;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            right: 0;
+        }
+
+        .nav-links.show {
+            display: flex;
+        }
+
+        .hamburger {
+            display: flex;
+        }
+
+        /* Toggle hamburger animation */
+        .hamburger.open div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.open div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open div:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .container {
+            margin: 20px auto;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        .diagnostic-item {
+            padding: 15px;
+        }
+    }
+</style>
+</head>
+<body>
+    <nav>
+        <div class="logo"><img src="images/vitallogo.svg" alt=""></div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="#" class="active">Diagnostics</a>
+            <a href="devices.html">Devices</a>
+            <a href="#">Settings</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Diagnostics</h1>
+        <div class="diagnostics-list">
+            <div class="diagnostic-item blood-pressure">
+                <div class="item-content">
+                    <div class="icon"><span class="material-symbols-outlined">
+                        cardiology
+                    </span></div>
+                    <div class="item-title">Blood Pressure</div>
+                </div>
+                <button class="add-button">+</button>
+            </div>
+
+            <div class="diagnostic-item glucose">
+                <div class="item-content">
+                    <div class="icon"><span class="material-symbols-outlined">
+                        glucose
+                    </span></div>
+                    <div class="item-title">Glucose</div>
+                </div>
+                <button class="add-button">+</button>
+            </div>
+
+            <div class="diagnostic-item sleep">
+                <div class="item-content">
+                    <div class="icon"><span class="material-symbols-outlined">
+                        bedtime
+                    </span></div>
+                    <div class="item-title">Sleep</div>
+                </div>
+                <button class="add-button">+</button>
+            </div>
+
+            <a href="weight3.html" class="diagnostic-item body-weight">
+                <div class="item-content">
+                    <div class="icon"><span class="material-symbols-outlined">
+                        monitor_weight
+                    </span></div>
+                    <div class="item-title">Body Weight</div>
+                </div>
+                <button class="add-button">+</button>
+            </a>
+
+            <a href="temperatureform.html" class="diagnostic-item body-temperature">
+                <div class="item-content">
+                    <div class="icon"><span class="material-symbols-outlined">
+                        device_thermostat
+                    </span></div>
+                    <div class="item-title">Body Temperature</div>
+                </div>
+                <button class="add-button">+</button>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            navLinks.classList.toggle('show');
+            hamburger.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>

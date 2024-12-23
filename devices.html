@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+ 
+        body {
+            padding: 20px;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+ 
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+ 
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+ 
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+ 
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 500;
+        }
+ 
+        .nav-links a.active {
+            border-bottom: 2px solid #000;
+        }
+ 
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+ 
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+ 
+        .search-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+ 
+        .search-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            cursor: pointer;
+        }
+ 
+        .search-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+ 
+        .icon {
+            width: 40px;
+            height: 40px;
+            background: #f5f5f5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+ 
+        .search-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+ 
+        .add-button {
+            width: 30px;
+            height: 30px;
+            background: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+ 
+        .add-button:hover {
+            transform: scale(1.1);
+        }
+ 
+        .device-list {
+            margin-top: 20px;
+            display: none;
+        }
+ 
+        .device-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f5f5f5;
+            margin-bottom: 10px;
+        }
+ 
+        .device-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+ 
+        .device-status {
+            font-size: 0.9rem;
+            color: #666;
+        }
+ 
+        .searching-animation {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+ 
+        .searching-animation .dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+ 
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #000;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+ 
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+ 
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+ 
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(0.5);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+</style>
+</head>
+<body>
+<nav>
+<div class="logo">♡</div>
+<div class="nav-links">
+<a href="home.html">Home</a>
+<a href="diagnostics.html">Diagnostics</a>
+<a href="#" class="active">Devices</a>
+<a href="#">Settings</a>
+</div>
+</nav>
+ 
+    <div class="container">
+        <h1>Connect your devices</h1>
+        <div class="search-container">
+            <div class="search-header" id="searchToggle">
+                <div class="search-left">
+                    <div class="icon">📡</div>
+                    <div class="search-title">Search Bluetooth Device</div>
+                </div>
+                <button class="add-button" id="searchButton">+</button>
+            </div>
+
+            <div class="searching-animation" id="searchingAnimation">
+                <div>Searching for Devices...</div>
+                <div class="dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+
+            <div class="device-list" id="deviceList">
+            </div>
+        </div>
+
+        <div class="temperature-display" id="temperatureDisplay">
+            </div>
+    </div>
+
+    <script>
+        const searchButton = document.getElementById('searchButton');
+        const searchingAnimation = document.getElementById('searchingAnimation');
+        const deviceList = document.getElementById('deviceList');
+        const temperatureDisplay = document.getElementById('temperatureDisplay');
+
+        // Service UUID for Health Thermometer Service
+        const temperatureServiceUUID = '00001809-0000-1000-8000-00805f9b34fb';
+
+        let isSearching = false;
+        let connectedDevice = null; 
+
+        searchButton.addEventListener('click', async () => {
+            if (!isSearching) {
+                try {
+                    isSearching = true;
+                    searchingAnimation.style.display = 'block';
+                    deviceList.innerHTML = ''; 
+
+                    const options = {
+                        filters: [{ services: [temperatureServiceUUID] }]
+                    };
+
+                    const devices = await navigator.bluetooth.requestDevice(options);
+
+                    isSearching = false;
+                    searchingAnimation.style.display = 'none';
+
+                    if (devices) {
+                        // Handle multiple devices (optional)
+                        devices.forEach(device => {
+                            displayDevice(device);
+                        });
+                    } else {
+                        console.error("No devices found.");
+                    }
+
+                } catch (error) {
+                    console.error('Error requesting device:', error);
+                    // Handle permission denied or other errors
+                    if (error.name === 'NotFoundError') {
+                        console.error('No Bluetooth device found.'); 
+                    } else if (error.name === 'SecurityError') {
+                        console.error('User denied Bluetooth access.'); 
+                    } else {
+                        console.error('An unexpected error occurred:', error);
+                    }
+                    isSearching = false;
+                    searchingAnimation.style.display = 'none'; 
+                }
+            }
+        });
+
+        function displayDevice(device) {
+            const deviceElement = document.createElement('div');
+            deviceElement.className = 'device-item';
+            deviceElement.innerHTML = `
+                <div class="device-info">
+                    <div class="icon">📱</div>
+                    <div>
+                        <div>${device.name || "Unknown Device"}</div>
+                    </div>
+                </div>
+                <button class="connect-button">Connect</button>
+            `;
+
+            deviceElement.querySelector('.connect-button').addEventListener('click', async () => {
+                try {
+                    // Connect to the selected device
+                    const server = await device.gatt.connect();
+                    const service = await server.getPrimaryService(temperatureServiceUUID);
+                    const characteristic = await service.getCharacteristic('00002a1c-0000-1000-8000-00805f9b34fb'); // Temperature Measurement Characteristic UUID
+
+                    await characteristic.startNotifications();
+                    characteristic.addEventListener('characteristicvaluechanged', handleTemperatureChange);
+
+                    // Store connected device for later use (optional)
+                    connectedDevice = device; 
+
+                    // Display connection status (optional)
+                    deviceElement.querySelector('.device-status').textContent = "Connected"; 
+                } catch (error) {
+                    console.error('Error connecting:', error);
+                    // Display an error message to the user 
+                }
+            });
+
+            deviceList.appendChild(deviceElement);
+        }
+
+        function handleTemperatureChange(event) {
+            const value = event.target.value;
+            const flags = value.getUint8(0);
+            const temperature = (value.getInt16(1) / 100); // Convert to Celsius
+
+            // Update UI with temperature reading
+            temperatureDisplay.textContent = `Temperature: ${temperature.toFixed(2)} °C`; 
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weight Tracker - Accessible Version</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* Enable user selection for accessibility */
+        * {
+            user-select: text;
+            -webkit-tap-highlight-color: rgba(59, 130, 246, 0.3);
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f4f8;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            min-height: 600px;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            padding: 3rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #f0f4f8;
+            border: none;
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 16px;
+            font-size: 1.5rem;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #e1e8f0;
+        }
+
+        .back-button a {
+            text-decoration: none;
+            color: #1e293b;
+            font-size: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .date {
+            font-size: 1.5rem;
+            color: #3b82f6;
+            margin-top: 1rem;
+        }
+
+        .weight-display {
+            text-align: center;
+            margin: 2rem 0;
+            cursor: pointer;
+        }
+
+        .weight-display span {
+            font-size: 6rem;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        .weight-input {
+            font-size: 6rem;
+            color: #3b82f6;
+            width: 300px;
+            border: none;
+            border-bottom: 4px solid #3b82f6;
+            text-align: center;
+            background: transparent;
+            outline: none;
+            padding: 0.5rem;
+            margin: 0;
+            font-family: inherit;
+            font-weight: bold;
+        }
+
+        .unit {
+            font-size: 3rem;
+            color: #3b82f6;
+            margin-left: 1rem;
+        }
+
+        .slider-section {
+            margin: 3rem 0;
+            padding: 0 2rem;
+        }
+
+        .slider-container {
+            width: 100%;
+            position: relative;
+            height: 2rem;
+            background-color: #f1f5f9;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .slider-progress {
+            height: 100%;
+            background-color: #3b82f6;
+            border-radius: 16px;
+            transition: width 0.3s ease;
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 50%;
+            width: 4rem;
+            height: 4rem;
+            background: white;
+            border: 4px solid #3b82f6;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .slider-handle:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 6px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .slider-marks {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 2rem;
+        }
+
+        .slider-marks span {
+            font-size: 1.5rem;
+            color: #64748b;
+            font-weight: bold;
+        }
+
+        .submit-button {
+            display: block;
+            width: 5rem;
+            height: 5rem;
+            margin: 3rem auto;
+            background: #3b82f6;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .submit-button:hover {
+            background: #2563eb;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .motivation {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #64748b;
+            margin-top: 2rem;
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .content {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .date {
+                font-size: 1.25rem;
+            }
+
+            .weight-display span {
+                font-size: 4rem;
+            }
+
+            .weight-input {
+                font-size: 4rem;
+                width: 200px;
+            }
+
+            .unit {
+                font-size: 2rem;
+            }
+
+            .slider-handle {
+                width: 3rem;
+                height: 3rem;
+            }
+
+            .slider-marks span {
+                font-size: 1.25rem;
+            }
+
+            .submit-button {
+                width: 4rem;
+                height: 4rem;
+                font-size: 1.5rem;
+            }
+
+            .motivation {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* High Contrast Mode */
+        @media (prefers-contrast: high) {
+            body {
+                background-color: white;
+            }
+
+            .container {
+                border: 4px solid #000;
+            }
+
+            .weight-display span,
+            .weight-input,
+            .unit {
+                color: #000;
+            }
+
+            .slider-progress {
+                background-color: #000;
+            }
+
+            .slider-handle {
+                border-color: #000;
+            }
+
+            .submit-button {
+                background: #000;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="header">
+                <button class="back-button" aria-label="Go back">
+                    <a href="/weMonitor">⬅</a>
+                </button>
+                <h1>What is your weight today?</h1>
+                <div class="date" id="current-date" aria-label="Current date"></div>
+            </div>
+
+            <div class="weight-display" onclick="enableInput()" role="button" tabindex="0">
+                <span id="weight-display">
+                    <span id="weight-value" aria-label="Current weight">70.0</span>
+                    <span class="unit">kg</span>
+                </span>
+                <input 
+                    type="text" 
+                    id="weight-input" 
+                    class="weight-input" 
+                    style="display: none;"
+                    aria-label="Enter weight in kilograms"
+                    role="spinbutton"
+                    min="40"
+                    max="120"
+                >
+            </div>
+
+            <div class="slider-section">
+                <div 
+                    class="slider-container" 
+                    id="slider"
+                    role="slider"
+                    aria-valuemin="40"
+                    aria-valuemax="120"
+                    aria-valuenow="70"
+                >
+                    <div class="slider-progress" id="progress"></div>
+                    <div class="slider-handle" id="handle" tabindex="0"></div>
+                </div>
+                <div class="slider-marks" aria-hidden="true">
+                    <span>40</span>
+                    <span>60</span>
+                    <span>80</span>
+                    <span>100</span>
+                    <span>120</span>
+                </div>
+            </div>
+
+            <button class="submit-button" aria-label="Save weight">✔</button>
+
+            <p class="motivation" role="status">You have almost got it! Keep it up!</p>
+        </div>
+    </div>
+
+    <script>
+        // Previous JavaScript code remains the same
+        const dateOptions = { day: 'numeric', month: 'short', year: 'numeric' };
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-GB', dateOptions);
+
+        const slider = document.getElementById('slider');
+        const handle = document.getElementById('handle');
+        const progress = document.getElementById('progress');
+        const weightValue = document.getElementById('weight-value');
+        const weightDisplay = document.getElementById('weight-display');
+        const weightInput = document.getElementById('weight-input');
+
+        const MIN_WEIGHT = 40;
+        const MAX_WEIGHT = 120;
+        const WEIGHT_RANGE = MAX_WEIGHT - MIN_WEIGHT;
+        const SCROLL_SENSITIVITY = 0.05; // Reduced sensitivity for better control
+
+        function setWeight(weight) {
+            const clampedWeight = Math.min(Math.max(weight, MIN_WEIGHT), MAX_WEIGHT);
+            const position = ((clampedWeight - MIN_WEIGHT) / WEIGHT_RANGE) * 100;
+
+            handle.style.left = `${position}%`;
+            progress.style.width = `${position}%`;
+            weightValue.textContent = clampedWeight.toFixed(1);
+            
+            // Update ARIA values
+            slider.setAttribute('aria-valuenow', clampedWeight.toFixed(1));
+        }
+
+        function enableInput() {
+            weightDisplay.style.display = 'none';
+            weightInput.style.display = 'inline';
+            weightInput.value = weightValue.textContent;
+            weightInput.focus();
+        }
+
+        weightInput.addEventListener('blur', function() {
+            const newWeight = parseFloat(this.value);
+            if (!isNaN(newWeight) && newWeight >= MIN_WEIGHT && newWeight <= MAX_WEIGHT) {
+                setWeight(newWeight);
+            }
+            weightInput.style.display = 'none';
+            weightDisplay.style.display = 'inline';
+        });
+
+        weightInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                this.blur();
+            }
+        });
+
+        // Keyboard controls for slider
+        handle.addEventListener('keydown', function(e) {
+            let newWeight = parseFloat(weightValue.textContent);
+            
+            switch(e.key) {
+                case 'ArrowLeft':
+                case 'ArrowDown':
+                    newWeight -= 0.1;
+                    break;
+                case 'ArrowRight':
+                case 'ArrowUp':
+                    newWeight += 0.1;
+                    break;
+                case 'PageDown':
+                    newWeight -= 1;
+                    break;
+                case 'PageUp':
+                    newWeight += 1;
+                    break;
+                default:
+                    return;
+            }
+            
+            e.preventDefault();
+            setWeight(newWeight);
+        });
+
+        const initialWeight = 70.0;
+        setWeight(initialWeight);
+
+        slider.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const currentWeight = parseFloat(weightValue.textContent);
+            const delta = e.deltaY * SCROLL_SENSITIVITY;
+            const newWeight = currentWeight - delta * 0.01;
+            setWeight(newWeight);
+        }, { passive: false });
+
+        let isDragging = false;
+        
+        slider.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            updateSlider(e.clientX);
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                updateSlider(e.clientX);
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        slider.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            const touch = e.touches[0];
+            updateSlider(touch.clientX);
+        });
+
+        slider.addEventListener('touchmove', (e) => {
+            if (isDragging) {
+                const touch = e.touches[0];
+                updateSlider(touch.clientX);
+            }
+        });
+
+        document.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        function updateSlider(clientX) {
+            const rect = slider.getBoundingClientRect();
+            const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+            const weight = MIN_WEIGHT + (x / rect.width) * WEIGHT_RANGE;
+            setWeight(weight);
+        }
+    </script>
+</body>
+</html>
