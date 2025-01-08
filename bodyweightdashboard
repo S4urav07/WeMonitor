@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <title>Weight Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 500;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ddd;
+            overflow: hidden;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 2.5em;
+            margin: 40px 0;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 60px;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .date-list {
+            width: 180px;
+        }
+
+        .date-button {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 12px;
+            background-color: #E8F0FE;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .date-button.active {
+            background-color: #A4C6FF;
+        }
+
+        .date {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .time {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .weight-display {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 20px;
+            background-color: #F8F9FF; /* Light background color */
+            border-radius: 12px; /* Rounded corners */
+            border: 2px solid #A4C6FF; /* Border similar to the buttons */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional subtle shadow */
+        }
+
+        .gauge-container {
+            width: 400px;
+            height: 250px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gauge {
+            width: 100%;
+            height: 100%;
+        }
+
+        .weight-value-container {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .weight-value {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .weight-unit {
+            font-size: 24px;
+            color: #666;
+            margin-left: 5px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px; /* Space between gauge and buttons */
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            background-color: #000;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            min-width: 160px;
+        }
+
+        .tips-box {
+            background-color: #F8F9FF;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 60px;
+        }
+
+        .tips-box h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo"><img src="images/vitallogo.svg" alt=""></div>
+        <nav class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Diagnostics</a>
+            <a href="#">Devices</a>
+            <a href="#">Settings</a>
+        </nav>
+    </header>
+
+    <h1 class="title">Your body weight!</h1>
+
+    <main class="main-content">
+        <div class="date-list">
+            <button class="date-button">
+                <div class="date">8 Tue</div>
+                <div class="time">10:14 am</div>
+            </button>
+            <button class="date-button active">
+                <div class="date">9 Wed</div>
+                <div class="time">10:14 am</div>
+            </button>
+            <button class="date-button">
+                <div class="date">10 Thu</div>
+                <div class="time">10:14 am</div>
+            </button>
+            <button class="date-button">
+                <div class="date">12 Fri</div>
+                <div class="time">10:14 am</div>
+            </button>
+        </div>
+
+        <div class="weight-display">
+            <div class="gauge-container">
+                <svg class="gauge" viewBox="0 0 200 120">
+                    <path 
+                        d="M40 100 A60 60 0 0 1 160 100" 
+                        fill="none" 
+                        stroke="#A4C6FF" 
+                        stroke-width="25"
+                        stroke-linecap="round"
+                    />
+                    <circle cx="100" cy="100" r="3" fill="white"/>
+                </svg>
+                <div class="weight-value-container">
+                    <span class="weight-value">60</span>
+                    <span class="weight-unit">kg</span>
+                </div>
+            </div>
+
+            <!-- Move the action buttons below the gauge container -->
+            <div class="action-buttons">
+                <button class="btn">Insert data</button>
+                <button class="btn">Return</button>
+            </div>
+        </div>
+    </main>
+
+    <div class="tips-box">
+        <h2>Tips</h2>
+        <p>Maintain a consistent sleep schedule and avoid screens before bed to improve sleep quality.</p>
+    </div>
+
+    <script>
+        document.querySelectorAll('.date-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.date-button').forEach(b => 
+                    b.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
