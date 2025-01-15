@@ -34,15 +34,21 @@
             padding: 20px 0;
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
+        .logo img {
+           	width: 40px;
+						
         }
+			
+			nav {
+						display: flex;
+    				align-items: center;
+    				justify-content: space-between;
+			}
 
         .nav-links {
             display: flex;
-            gap: 30px;
-						float: right;
+            gap: 90px;
+						justify-content: right;
         }
 
         .nav-links a {
@@ -69,18 +75,22 @@
 				/* Show the hamburger on small screens */
     @media (max-width: 768px) {
         .nav-links {
-            display: none;
-            width: 100%;
-            justify-content: space-between;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-            padding: 10px 0;
-            background-color: #fff;
-            position: absolute;
-            top: 60px;
-            left: 0;
-            right: 0;
+                display: none;
+								width: 100%;
+								justify-content: flex-start;
+								flex-direction: column;
+								gap: 10px;
+								/* margin-top: 10px; */
+								padding: 20px;
+								background-color: #fff;
+								position: absolute;
+								top: 60px;
+								left: 0;
+								right: 0;
+								height: calc(100% - 60px);
+								z-index: 1000;
+								gap: 50px;
+								font-size: 30px;
         }
  
         .nav-links.show {
@@ -347,7 +357,7 @@
             <div></div>
         </div>
         <div class="nav-links">
-            <a href="home.html">ホーム</a>
+            <a href="#">ホーム</a>
             <a href="diagnostics.html">診断</a>
             <a href="devices.html">デバイス</a>
             <a href="#">設定</a>
@@ -355,7 +365,7 @@
     </nav>
 	</header>
 
-    <h1 class="title">Your body weight!</h1>
+    <h1 class="title">体重!</h1>
 
     <main class="main-content">
         <div class="date-list">
