@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <title>Weight Dashboard</title>
     <style>
         * {
@@ -35,86 +35,101 @@
         }
 
         .logo img {
-           	width: 40px;
-						
+            width: 40px;
         }
-			
-			nav {
-						display: flex;
-    				align-items: center;
-    				justify-content: space-between;
-			}
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
         .nav-links {
             display: flex;
             gap: 90px;
-						justify-content: right;
+            justify-content: right;
         }
 
         .nav-links a {
             text-decoration: none;
             color: #000;
             font-weight: 500;
+            position: relative;
         }
-				
-			/* Hamburger menu styling */
-    .hamburger {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        cursor: pointer;
-    }
- 
-    .hamburger div {
-        width: 25px;
-        height: 3px;
-        background-color: #000;
-        transition: transform 0.3s ease;
-    }
-			
-				/* Show the hamburger on small screens */
-    @media (max-width: 768px) {
-        .nav-links {
-                display: none;
-								width: 100%;
-								justify-content: flex-start;
-								flex-direction: column;
-								gap: 10px;
-								/* margin-top: 10px; */
-								padding: 20px;
-								background-color: #fff;
-								position: absolute;
-								top: 60px;
-								left: 0;
-								right: 0;
-								height: calc(100% - 60px);
-								z-index: 1000;
-								gap: 50px;
-								font-size: 30px;
+
+        /* Hover effect: Only the underline appears from left to right */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; /* Adjusts the position of the underline */
+            left: 0;
+            width: 0;
+            height: 2px; /* Thickness of the underline */
+            background-color: #96E2F1; /* Blue underline */
+            transition: width 0.3s ease; /* Adds smooth animation for width */
         }
- 
-        .nav-links.show {
-            display: flex;
+
+        .nav-links a:hover::after {
+            width: 100%; /* Expands to 100% width on hover */
         }
- 
+        
+        /* Hamburger menu styling */
         .hamburger {
-            display: flex;
-						float: right;
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
         }
- 
-        /* Toggle hamburger animation */
-        .hamburger.open div:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #000;
+            transition: transform 0.3s ease;
         }
- 
-        .hamburger.open div:nth-child(2) {
-            opacity: 0;
+
+        /* Show the hamburger on small screens */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+                justify-content: flex-start;
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+                background-color: #fff;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                height: calc(100% - 60px);
+                z-index: 1000;
+                gap: 50px;
+                font-size: 30px;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+                float: right;
+            }
+
+            /* Toggle hamburger animation */
+            .hamburger.open div:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .hamburger.open div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.open div:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
         }
- 
-        .hamburger.open div:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-    }
 
         .profile-pic {
             width: 40px;
@@ -298,7 +313,7 @@
                 width: 100%;
                 max-width: 500px;
                 margin: 0 auto;
-								display: flex;
+                display: flex;
             }
 
             .weight-display {
@@ -344,26 +359,25 @@
                 padding: 12px 24px;
             }
         }
-
     </style>
 </head>
 <body>
-	<header>
-    <nav>
-        <div class="logo"><img src="images/vitallogo.svg" alt=""></div>
-        <div class="hamburger" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        <div class="nav-links">
-            <a href="#">ホーム</a>
-            <a href="diagnostics.html">診断</a>
-            <a href="devices.html">デバイス</a>
-            <a href="#">設定</a>
-        </div>
-    </nav>
-	</header>
+    <header>
+        <nav>
+            <div class="logo"><img src="images/vitallogo.svg" alt=""></div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="nav-links">
+                <a href="#">ホーム</a>
+                <a href="diagnostics.html">診断</a>
+                <a href="devices.html">デバイス</a>
+                <a href="#">設定</a>
+            </div>
+        </nav>
+    </header>
 
     <h1 class="title">体重!</h1>
 
@@ -425,8 +439,8 @@
     </main>
 
     <div class="tips-box">
-        <h2>ヒント</h2>
-        <p>睡眠の質を高めるために、睡眠スケジュールを一定に保ち、寝る前のスクリーンを避ける。</p>
+        <h2>Tips</h2>
+        <p>Maintain a consistent sleep schedule and avoid screens before bed to improve sleep quality.</p>
     </div>
 
     <script>
@@ -444,9 +458,9 @@
             answerDisplay.style.display = 'block'; // Show the answer
             answerDisplay.textContent = `選んでたは: ${answer}`;
         }
-				
-				//hamburger menu
-				function toggleMenu() {
+
+        //hamburger menu
+        function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
             const hamburger = document.querySelector('.hamburger');
             navLinks.classList.toggle('show');
