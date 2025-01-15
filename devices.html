@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 <style>
         * {
             margin: 0;
@@ -58,6 +62,64 @@
 
         .nav-links a:hover::after {
             width: 100%; /* Expands to 100% width on hover */
+        }
+        
+        /* Hamburger menu styling */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #000;
+            transition: transform 0.3s ease;
+        }
+
+        /* Show the hamburger on small screens */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+                justify-content: flex-start;
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+                background-color: #fff;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                height: calc(100% - 60px);
+                z-index: 1000;
+                gap: 50px;
+                font-size: 30px;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+                float: right;
+            }
+
+            /* Toggle hamburger animation */
+            .hamburger.open div:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .hamburger.open div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.open div:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
         }
  
         .container {
@@ -196,14 +258,19 @@
 </head>
 <body>
 <nav>
-<div class="logo">♡</div>
-<div class="nav-links">
-<a href="home.html">Home</a>
-<a href="diagnostics.html">Diagnostics</a>
-<a href="#" class="active">Devices</a>
-<a href="#">Settings</a>
-</div>
-</nav>
+        <div class="logo"><img src="images/vitallogo.svg" alt=""></div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="nav-links">
+            <a href="home.html">ホーム</a>
+            <a href="diagnostics.html" >診断</a>
+            <a href="devices.html"　class="active">デバイス</a>
+            <a href="#">設定</a>
+        </div>
+    </nav>
  
     <div class="container">
         <h1>Connect your devices</h1>
@@ -330,6 +397,13 @@
 
             // Update UI with temperature reading
             temperatureDisplay.textContent = `Temperature: ${temperature.toFixed(2)} °C`; 
+        }
+			
+			function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            navLinks.classList.toggle('show');
+            hamburger.classList.toggle('open');
         }
     </script>
 </body>
