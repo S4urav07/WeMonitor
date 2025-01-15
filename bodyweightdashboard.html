@@ -338,10 +338,10 @@
 
         <!-- Appetite Question Card -->
         <div class="appetite-display">
-            <h2>Did you have an appetite today?</h2>
+            <h2>食欲低下？</h2>
             <div class="appetite-button">
-                <button class="btn" onclick="showAnswer('Yes')">Yes</button>
-                <button class="btn" onclick="showAnswer('No')">No</button>
+                <button class="btn" onclick="showAnswer('有')">有</button>
+                <button class="btn" onclick="showAnswer('無')">無</button>
             </div>
             <!-- Hidden answer display -->
             <div class="answer-display" id="answer-display"></div>
@@ -366,7 +366,7 @@
         function showAnswer(answer) {
             const answerDisplay = document.getElementById('answer-display');
             answerDisplay.style.display = 'block'; // Show the answer
-            answerDisplay.textContent = `You selected: ${answer}`;
+            answerDisplay.textContent = `選んでたは: ${answer}`;
         }
     </script>
 </body>
