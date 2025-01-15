@@ -31,78 +31,99 @@
         padding: 20px 0;
         max-width: 1200px;
         margin: 0 auto;
-        position: relative;
+        /*position: relative;*/
     }
  
-    .logo {
-        font-size: 24px;
-        font-weight: bold;
-    }
+    .logo img {
+            width: 40px;
+        }
  
     .nav-links {
-        display: flex;
-        gap: 30px;
-    }
- 
-    .nav-links a {
-        text-decoration: none;
-        color: #000;
-        font-weight: 500;
-    }
- 
-    /* Hamburger menu styling */
-    .hamburger {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        cursor: pointer;
-    }
- 
-    .hamburger div {
-        width: 25px;
-        height: 3px;
-        background-color: #000;
-        transition: transform 0.3s ease;
-    }
- 
-    /* Show the hamburger on small screens */
-    @media (max-width: 768px) {
-        .nav-links {
-            display: none;
-            width: 100%;
-            justify-content: space-between;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-            padding: 10px 0;
-            background-color: #fff;
+            display: flex;
+            gap: 90px;
+            justify-content: right;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 500;
+            position: relative;
+        }
+
+        /* Hover effect: Only the underline appears from left to right */
+        .nav-links a::after {
+            content: '';
             position: absolute;
-            top: 60px;
+            bottom: -5px; /* Adjusts the position of the underline */
             left: 0;
-            right: 0;
+            width: 0;
+            height: 2px; /* Thickness of the underline */
+            background-color: #A4C6FF; /* Blue underline */
+            transition: width 0.3s ease; /* Adds smooth animation for width */
         }
- 
-        .nav-links.show {
-            display: flex;
+
+        .nav-links a:hover::after {
+            width: 100%; /* Expands to 100% width on hover */
         }
- 
+        
+        /* Hamburger menu styling */
         .hamburger {
-            display: flex;
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
         }
- 
-        /* Toggle hamburger animation */
-        .hamburger.open div:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #000;
+            transition: transform 0.3s ease;
         }
- 
-        .hamburger.open div:nth-child(2) {
-            opacity: 0;
+
+        /* Show the hamburger on small screens */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+                justify-content: flex-start;
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+                background-color: #fff;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                height: calc(100% - 60px);
+                z-index: 1000;
+                gap: 50px;
+                font-size: 30px;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+                float: right;
+            }
+
+            /* Toggle hamburger animation */
+            .hamburger.open div:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .hamburger.open div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.open div:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
         }
- 
-        .hamburger.open div:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-    }
  
     .container {
         max-width: 1200px;
@@ -244,7 +265,7 @@
     </nav>
  
     <div class="container">
-        <h1>Check your Health</h1>
+        <h1>健康チェック</h1>
         <div class="dashboard-grid">
             <div class="card bp-card">
                 <div class="card-header">
@@ -252,8 +273,8 @@
                         cardiology
                     </span></div>
                     <div>
-                        <div class="card-title">Blood Pressure</div>
-                        <div class="card-subtitle">Normal</div>
+                        <div class="card-title">血圧</div>
+                        <div class="card-subtitle">普通</div>
                         <div class="card-subtitle">01/01</div>
                     </div>
                 </div>
@@ -267,8 +288,8 @@
                         bedtime
                     </span></div>
                     <div>
-                        <div class="card-title">Sleep</div>
-                        <div class="card-subtitle">Good</div>
+                        <div class="card-title">スリープ</div>
+                        <div class="card-subtitle">良い</div>
                         <div class="card-subtitle">01/01</div>
                     </div>
                 </div>
@@ -282,7 +303,7 @@
                         glucose
                     </span></div>
                     <div>
-                        <div class="card-title">Glucose</div>
+                        <div class="card-title">グルコース</div>
                         <div class="card-subtitle">Aerobic</div>
                         <div class="card-subtitle">01/01</div>
                     </div>
@@ -298,28 +319,28 @@
                         monitor_weight
                     </span></div>
                     <div>
-                        <div class="card-title">Body Weight</div>
-                        <div class="card-subtitle">Normal</div>
+                        <div class="card-title">体重</div>
+                        <div class="card-subtitle">普通</div>
                         <div class="card-subtitle">01/01</div>
                     </div>
                 </div>
                 <div class="card-value">60kg</div>
                 <button class="btn">Check</button>
             </a></div>
-            <div class="card bt-card">
+            <div class="card bt-card"><a href="temperatureform.html">
                 <div class="card-header">
                     <div class="icon"><span class="material-symbols-outlined">
                         device_thermostat
                     </span></div>
                     <div>
-                        <div class="card-title">Body Temperature</div>
+                        <div class="card-title">体温</div>
                         <div class="card-subtitle">Normal</div>
                         <div class="card-subtitle">01/01</div>
                     </div>
                 </div>
                 <div class="card-value">36.6°C</div>
                 <button class="btn">Check</button>
-            </div>
+            </a></div>
             <div class="card glucose-card">
                 <div class="card-header">
                     <div class="icon"><span class="material-symbols-outlined">
