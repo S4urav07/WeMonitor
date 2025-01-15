@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <title>Blood Pressure Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        body {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo img {
+            width: 40px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 90px;
+            justify-content: right;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 500;
+            position: relative;
+        }
+
+        /* Hover effect: Only the underline appears from left to right */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; /* Adjusts the position of the underline */
+            left: 0;
+            width: 0;
+            height: 2px; /* Thickness of the underline */
+            background-color: #96E2F1; /* Blue underline */
+            transition: width 0.3s ease; /* Adds smooth animation for width */
+        }
+
+        .nav-links a:hover::after {
+            width: 100%; /* Expands to 100% width on hover */
+        }
+        
+        /* Hamburger menu styling */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #000;
+            transition: transform 0.3s ease;
+        }
+
+        /* Show the hamburger on small screens */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+                justify-content: flex-start;
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+                background-color: #fff;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                height: calc(100% - 60px);
+                z-index: 1000;
+                gap: 50px;
+                font-size: 30px;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+                float: right;
+            }
+
+            /* Toggle hamburger animation */
+            .hamburger.open div:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .hamburger.open div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.open div:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ddd;
+            overflow: hidden;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 2.5em;
+            margin: 40px 0;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 60px;
+            margin-top: 40px;
+            position: relative;
+            flex-wrap: wrap;
+        }
+
+        .date-list {
+            width: 180px;
+        }
+
+        .date-button {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 12px;
+            background-color: #fffee6;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .date-button.active {
+            background-color: #F1EF96;
+        }
+
+        .date {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .time {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .weight-display {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 20px;
+            background-color: #fffee6; /* Light background color */
+            border-radius: 12px; /* Rounded corners */
+            border: 2px solid #F1EF96; /* Border similar to the buttons */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional subtle shadow */
+            margin-left: -40px;
+            max-width: 500px; /* Added max width for smaller screens */
+            width: 100%;
+        }
+
+        .gauge-container {
+            width: 100%;
+            height: 250px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gauge {
+            width: 100%;
+            height: 100%;
+        }
+
+        .weight-value-container {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .weight-value {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .weight-unit {
+            font-size: 24px;
+            color: #666;
+            margin-left: 5px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px; /* Space between gauge and buttons */
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            background-color: #000;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            min-width: 160px;
+        }
+
+        .appetite-display {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 20px;
+            background-color: #fffee6; /* Light background color */
+            border-radius: 12px; /* Rounded corners */
+            border: 2px solid #F1EF96; /* Border similar to the buttons */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional subtle shadow */
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px; /* Added max width */
+        }
+
+        .appetite-display h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .appetite-button {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .answer-display {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #4CAF50; /* Green text for feedback */
+            display: none; /* Initially hidden */
+        }
+
+        .tips-box {
+            background-color: #fffee6;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 60px;
+        }
+
+        .tips-box h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .date-list {
+                width: 100%;
+                max-width: 500px;
+                margin: 0 auto;
+                display: flex;
+            }
+
+            .weight-display {
+                margin-left: 0;
+                max-width: 100%;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .appetite-display {
+                max-width: 100%;
+            }
+
+            .title {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.5em;
+            }
+
+            .date-button {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .weight-value {
+                font-size: 40px;
+            }
+
+            .weight-unit {
+                font-size: 20px;
+            }
+
+            .btn {
+                font-size: 14px;
+                min-width: 120px;
+                padding: 12px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><img src="images/vitallogo.svg" alt=""></div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="nav-links">
+                <a href="home.html">ホーム</a>
+                <a href="diagnostics.html">診断</a>
+                <a href="devices.html">デバイス</a>
+                <a href="#">設定</a>
+            </div>
+        </nav>
+    </header>
+
+    <h1 class="title">血圧を管理!</h1>
+
+    <main class="main-content">
+        <div class="date-list">
+            <button class="date-button">
+                <div class="date">8 火</div>
+                <div class="time">10:14 am</div>
+            </button>
+            <button class="date-button active">
+                <div class="date">9 水</div>
+                <div class="time">10:14 am</div>
+            </button>
+            <button class="date-button">
+                <div class="date">10 木</div>
+                <div class="time">10:14 am</div>
+            </button>
+            <button class="date-button">
+                <div class="date">11 金</div>
+                <div class="time">10:14 am</div>
+            </button>
+        </div>
+
+        <div class="weight-display">
+            <div class="gauge-container">
+                <!--<svg class="gauge" viewBox="0 0 200 120">
+                    <path 
+                        d="M40 100 A60 60 0 0 1 160 100" 
+                        fill="none" 
+                        stroke="#A4C6FF" 
+                        stroke-width="25"
+                        stroke-linecap="round"
+                    />
+                    <circle cx="100" cy="100" r="3" fill="white"/>
+                </svg>-->
+                <div class="weight-value-container">
+                    <span class="weight-value">120/80</span>
+                    <span class="weight-unit">mmHg</span>
+                </div>
+            </div>
+
+            <!-- Move the action buttons below the gauge container -->
+            <div class="action-buttons">
+                <button class="btn"><a href="weight3.html">データ入力</a></button>
+                <button class="btn"><a href="home.html">戻る</a></button>
+            </div>
+        </div>
+
+        <div class="appetite-display">
+    <h2>服薬チェック</h2>
+    <div class="medicine-time-buttons">
+        <button class="btn" onclick="toggleMedicineCheck('morning')">朝</button>
+        <button class="btn" onclick="toggleMedicineCheck('noon')">昼</button>
+        <button class="btn" onclick="toggleMedicineCheck('night')">夜</button>
+    </div>
+    
+    <!-- Hidden summary display for morning, noon, and night -->
+    <div class="answer-display" id="answer-display"></div>
+</div>
+    </main>
+
+    <div class="tips-box">
+        <h2>Tips</h2>
+        <p>Maintain a consistent sleep schedule and avoid screens before bed to improve sleep quality.</p>
+    </div>
+
+    <script>
+        document.querySelectorAll('.date-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.date-button').forEach(b => 
+                    b.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+
+        // Function to show the answer
+        function showAnswer(answer) {
+            const answerDisplay = document.getElementById('answer-display');
+            answerDisplay.style.display = 'block'; // Show the answer
+            answerDisplay.textContent = `選んでたは: ${answer}`;
+        }
+
+        //hamburger menu
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            navLinks.classList.toggle('show');
+            hamburger.classList.toggle('open');
+        }
+			 // Store the states of whether each medicine time is checked or not
+    let medicineCheck = {
+        morning: false,
+        noon: false,
+        night: false
+    };
+			
+			
+			// Function to toggle the check for each time period
+    function toggleMedicineCheck(time) {
+        medicineCheck[time] = !medicineCheck[time];
+        updateAnswerDisplay();
+    }
+			
+			 // Function to update the answer display based on selected times
+    function updateAnswerDisplay() {
+        const answerDisplay = document.getElementById('answer-display');
+        let summary = '服薬チェック結果: <br>';
+
+        for (const time in medicineCheck) {
+            const status = medicineCheck[time] ? '済' : '未';
+            summary += `${time === 'morning' ? '朝' : time === 'noon' ? '昼' : '夜'}: ${status} <br>`;
+        }
+
+        answerDisplay.style.display = 'block';
+        answerDisplay.innerHTML = summary;
+    }
+    </script>
+</body>
+</html>
