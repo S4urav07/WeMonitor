@@ -245,14 +245,15 @@
         }
 
         .btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 25px;
-            background-color: #000;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            min-width: 160px;
+					 	margin: 10px 0 0 0;
+						padding: 15px 30px;
+						border: none;
+						border-radius: 25px;
+						background-color: #000;
+						color: white;
+						cursor: pointer;
+						font-size: 16px;
+						min-width: 160px;
         }
 
         .appetite-display {
@@ -281,6 +282,10 @@
             gap: 20px;
             margin-top: 20px;
         }
+			
+			.medicine-time-buttons {
+				text-align: center;
+			}
 
         .answer-display {
             margin-top: 20px;
@@ -359,6 +364,45 @@
                 padding: 12px 24px;
             }
         }
+			
+			/* Add a new card for image scanning */
+        .image-scanning-display {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 20px;
+            background-color: #fffee6; /* Light background color */
+            border-radius: 12px; /* Rounded corners */
+            border: 2px solid #F1EF96; /* Border similar to the buttons */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional subtle shadow */
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px; /* Added max width */
+        }
+
+        .image-scanning-display h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .image-scanning-button {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .image-scanning-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            background-color: #000;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
     </style>
 </head>
 <body>
@@ -437,6 +481,12 @@
     <!-- Hidden summary display for morning, noon, and night -->
     <div class="answer-display" id="answer-display"></div>
 </div>
+<div class="image-scanning-display">
+            <h2>画像スキャン</h2>
+            <div class="image-scanning-button">
+                <button class="image-scanning-btn" onclick="startImageScan()"><a href="camera1.html">スキャン開始</a></button>
+            </div>
+        </div>
     </main>
 
     <div class="tips-box">
