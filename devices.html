@@ -18,33 +18,46 @@
         }
  
         nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+        max-width: 1200px;
+        margin: 0 auto;
+        /*position: relative;*/
+    }
+ 
+    .logo img {
+            width: 40px;
+        }
+ 
+    .nav-links {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
+            gap: 90px;
+            justify-content: right;
         }
- 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
- 
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
- 
+
         .nav-links a {
             text-decoration: none;
             color: #000;
             font-weight: 500;
+            position: relative;
         }
- 
-        .nav-links a.active {
-            border-bottom: 2px solid #000;
+
+        /* Hover effect: Only the underline appears from left to right */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; /* Adjusts the position of the underline */
+            left: 0;
+            width: 0;
+            height: 2px; /* Thickness of the underline */
+            background-color: #A4C6FF; /* Blue underline */
+            transition: width 0.3s ease; /* Adds smooth animation for width */
+        }
+
+        .nav-links a:hover::after {
+            width: 100%; /* Expands to 100% width on hover */
         }
  
         .container {
