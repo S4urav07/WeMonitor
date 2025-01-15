@@ -26,36 +26,107 @@
         color: inherit;
     }
 
-    nav {
+     nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 20px 0;
         max-width: 1200px;
         margin: 0 auto;
-        position: relative;
+        /*position: relative;*/
     }
-
-    .logo {
-        font-size: 24px;
-        font-weight: bold;
-    }
-
+ 
+    .logo img {
+            width: 40px;
+        }
+ 
     .nav-links {
-        display: flex;
-        gap: 30px;
-    }
+            display: flex;
+            gap: 90px;
+            justify-content: right;
+        }
 
-    .nav-links a {
-        text-decoration: none;
-        color: #000;
-        font-weight: 500;
-    }
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 500;
+            position: relative;
+        }
 
-    .nav-links a.active {
-        border-bottom: 2px solid #000;
-    }
+        /* Hover effect: Only the underline appears from left to right */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; /* Adjusts the position of the underline */
+            left: 0;
+            width: 0;
+            height: 2px; /* Thickness of the underline */
+            background-color: #A4C6FF; /* Blue underline */
+            transition: width 0.3s ease; /* Adds smooth animation for width */
+        }
 
+        .nav-links a:hover::after {
+            width: 100%; /* Expands to 100% width on hover */
+        }
+        
+        /* Hamburger menu styling */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #000;
+            transition: transform 0.3s ease;
+        }
+
+        /* Show the hamburger on small screens */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+                justify-content: flex-start;
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+                background-color: #fff;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                height: calc(100% - 60px);
+                z-index: 1000;
+                gap: 50px;
+                font-size: 30px;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+                float: right;
+            }
+
+            /* Toggle hamburger animation */
+            .hamburger.open div:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .hamburger.open div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.open div:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+        }
+	
     .container {
         max-width: 1200px;
         margin: 40px auto;
@@ -143,60 +214,7 @@
     .body-temperature:hover {
         background-color: #F19696;
     }
-
-    /* Hamburger Menu */
-    .hamburger {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        cursor: pointer;
-    }
-
-    .hamburger div {
-        width: 25px;
-        height: 3px;
-        background-color: #000;
-        transition: transform 0.3s ease;
-    }
-
-    /* Show the hamburger and menu for small screens */
-    @media (max-width: 768px) {
-        .nav-links {
-            display: none;
-            width: 100%;
-            justify-content: space-between;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-            padding: 10px 0;
-            background-color: #fff;
-            position: absolute;
-            top: 60px;
-            left: 0;
-            right: 0;
-        }
-
-        .nav-links.show {
-            display: flex;
-        }
-
-        .hamburger {
-            display: flex;
-        }
-
-        /* Toggle hamburger animation */
-        .hamburger.open div:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .hamburger.open div:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.open div:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-
+	
         .container {
             margin: 20px auto;
         }
@@ -220,10 +238,10 @@
             <div></div>
         </div>
         <div class="nav-links">
-            <a href="home.html">Home</a>
-            <a href="#" class="active">Diagnostics</a>
-            <a href="devices.html">Devices</a>
-            <a href="#">Settings</a>
+            <a href="home.html">ホーム</a>
+            <a href="#" class="active">診断</a>
+            <a href="devices.html">デバイス</a>
+            <a href="#">設定</a>
         </div>
     </nav>
 
