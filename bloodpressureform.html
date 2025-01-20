@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blood Pressure Input</title>
+<style>
+
+        body {
+
+						font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            min-height: 100vh;
+
+            margin: 0;
+
+            background-color: #f5f5f5;
+
+            touch-action: none;
+
+        }
+
+        .container {
+
+            background-color: #fffee6;
+
+            border-radius: 16px;
+
+            padding: 100px;
+
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+            width: 100%;
+
+            max-width: 600px;
+
+        }
+
+        .header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 32px;
+
+        }
+
+        .title {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            margin: 0;
+
+        }
+
+        .scan-btn {
+
+            background-color: black;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 24px;
+
+            padding: 8px 16px;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+        .readings-container {
+
+            display: flex;
+
+            justify-content: space-around;
+
+            margin-bottom: 32px;
+
+        }
+
+        .reading-box {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+        .reading-label {
+
+            font-weight: 500;
+
+            font-size: 14px;
+
+        }
+
+        .reading-unit {
+
+            color: #666;
+
+            font-size: 12px;
+
+        }
+
+        .reading-value {
+
+            width: 96px;
+
+            height: 96px;
+
+            background: white;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+            cursor: ns-resize;
+
+            position: relative;
+
+            transition: transform 0.2s;
+
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+            user-select: none;
+
+            -webkit-user-select: none;
+
+        }
+
+        .reading-value:hover {
+
+            transform: scale(1.05);
+
+        }
+
+        .reading-value.active::before {
+
+            content: "▲";
+
+            position: absolute;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            opacity: 0.2;
+
+            pointer-events: none;
+
+            top: 8px;
+
+        }
+
+        .reading-value.active::after {
+
+            content: "▼";
+
+            position: absolute;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            opacity: 0.2;
+
+            pointer-events: none;
+
+            bottom: 8px;
+
+        }
+
+        .buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 16px;
+
+        }
+
+        .btn {
+
+            background-color: black;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 24px;
+
+            padding: 8px 32px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            transition: opacity 0.2s;
+
+        }
+
+        .btn:hover {
+
+            opacity: 0.9;
+
+        }
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1 class="title">Blood pressure</h1>
+<button class="scan-btn">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+<circle cx="12" cy="13" r="4"/>
+</svg>
+
+                Scan
+</button>
+</div>
+<div class="readings-container">
+<div class="reading-box">
+<span class="reading-label">Systolic</span>
+<span class="reading-unit">mmHg</span>
+<div class="reading-value" data-min="0" data-max="300">118</div>
+</div>
+<div class="reading-box">
+<span class="reading-label">Diastolics</span>
+<span class="reading-unit">mmHg</span>
+<div class="reading-value" data-min="0" data-max="300">76</div>
+</div>
+<div class="reading-box">
+<span class="reading-label">Pulse</span>
+<span class="reading-unit">bpm</span>
+<div class="reading-value" data-min="0" data-max="300">73</div>
+</div>
+</div>
+ 
+        <div class="buttons">
+<button class="btn">保存</button>
+<a href="bloodpressuredashboard.html"><button class="btn">戻る</button></a>
+</div>
+</div>
+ 
+    <script>
+
+        document.querySelectorAll(".reading-value").forEach(element => {
+
+            let startY = 0;
+
+            let currentY = 0;
+
+            let isDragging = false;
+
+            const threshold = 10;
+ 
+            // Mouse wheel event
+
+            element.addEventListener("wheel", (e) => {
+
+                e.preventDefault();
+
+                const currentValue = parseInt(element.textContent);
+
+                const min = parseInt(element.dataset.min);
+
+                const max = parseInt(element.dataset.max);
+
+                const delta = e.deltaY > 0 ? -1 : 1;
+
+                const newValue = Math.max(min, Math.min(max, currentValue + delta));
+
+                element.textContent = newValue;
+
+            });
+ 
+            // Mouse hover events
+
+            element.addEventListener("mouseenter", () => {
+
+                element.classList.add("active");
+
+            });
+ 
+            element.addEventListener("mouseleave", () => {
+
+                element.classList.remove("active");
+
+            });
+ 
+            // Touch events
+
+            element.addEventListener("touchstart", (e) => {
+
+                e.preventDefault();
+
+                isDragging = true;
+
+                element.classList.add("active");
+
+                startY = e.touches[0].clientY;
+
+                currentY = startY;
+
+            }, { passive: false });
+ 
+            element.addEventListener("touchmove", (e) => {
+
+                if (!isDragging) return;
+
+                e.preventDefault();
+
+                currentY = e.touches[0].clientY;
+
+                const deltaY = currentY - startY;
+
+                if (Math.abs(deltaY) >= threshold) {
+
+                    const currentValue = parseInt(element.textContent);
+
+                    const min = parseInt(element.dataset.min);
+
+                    const max = parseInt(element.dataset.max);
+
+                    const change = deltaY > 0 ? -1 : 1;
+
+                    const newValue = Math.max(min, Math.min(max, currentValue + change));
+
+                    element.textContent = newValue;
+
+                    startY = currentY;
+
+                }
+
+            }, { passive: false });
+ 
+            element.addEventListener("touchend", () => {
+
+                isDragging = false;
+
+                element.classList.remove("active");
+
+            });
+ 
+            element.addEventListener("touchcancel", () => {
+
+                isDragging = false;
+
+                element.classList.remove("active");
+
+            });
+
+        });
+</script>
+</body>
+</html>
+ 
