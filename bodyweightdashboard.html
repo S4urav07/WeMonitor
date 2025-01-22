@@ -38,6 +38,10 @@
             width: 40px;
         }
 
+	.logo a {
+	    color: black;
+	}
+
         nav {
             display: flex;
             align-items: center;
@@ -354,6 +358,23 @@
             .title {
                 font-size: 2.5em;
             }
+
+	    nav {
+	    	display: flex;
+		align-items: center;
+		justify-content: space-between;
+		color: black;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		background-color: white;
+		overflow: hidden;
+		transition: height 0.3s;
+		z-index: 999;
+		height: 60px;
+		padding: 19px;
+}
         }
 
         @media (max-width: 480px) {
@@ -385,7 +406,7 @@
 <body>
     <header>
         <nav>
-            <div class="logo"><a href="home.html"><img src="images/vitallogo.svg" alt=""></a></div>
+            <div class="logo"><a href="home.html"><a href="home.html"><span class="material-symbols-outlined">arrow_back</span></a></a></div>
             <div class="hamburger" onclick="toggleMenu()">
                 <div></div>
                 <div></div>
@@ -401,7 +422,7 @@
     </header>
 
     <h1 class="title">
-			<a href="home.html"><span class="material-symbols-outlined">arrow_back</span></a>
+			
 			<span class="title-heading">体重!</span>
 	</h1>
 
