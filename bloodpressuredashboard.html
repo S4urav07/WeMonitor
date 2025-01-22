@@ -149,7 +149,27 @@
             text-align: center;
             font-size: 2.5em;
             margin: 40px 0;
+	    overflow: hidden;
         }
+	.title span {
+		float: left;
+		display: inline-block;
+		line-height: 1.5;
+	}
+
+	.material-symbols-outlined {
+		font-size: 30px;
+	}
+
+	.title a {
+		color: black;
+	}
+	
+	
+	.title .title-heading {
+		float: none;
+		line-height: normal;
+	}
 
         .main-content {
             display: flex;
@@ -319,6 +339,7 @@
                 max-width: 500px;
                 margin: 0 auto;
                 display: flex;
+		gap: 14px
             }
 
             .weight-display {
@@ -341,8 +362,8 @@
         }
 
         @media (max-width: 480px) {
-            .title {
-                font-size: 1.5em;
+           .title {
+                font-size: 2.5em;
             }
 
             .date-button {
@@ -351,7 +372,7 @@
             }
 
             .weight-value {
-                font-size: 40px;
+                font-size: 50px;
             }
 
             .weight-unit {
@@ -359,7 +380,7 @@
             }
 
             .btn {
-                font-size: 14px;
+                font-size: 21px;
                 min-width: 120px;
                 padding: 12px 24px;
             }
@@ -423,7 +444,10 @@
         </nav>
     </header>
 
-    <h1 class="title">血圧を管理!</h1>
+	<h1 class="title">
+			<a href="home.html"><span class="material-symbols-outlined">arrow_back</span></a>
+			<span class="title-heading">血圧を管理!</span>
+	</h1>
 
     <main class="main-content">
         <div class="date-list">
@@ -466,7 +490,7 @@
             <!-- Move the action buttons below the gauge container -->
             <div class="action-buttons">
                 <button class="btn"><a href="bloodpressureform.html">データ入力</a></button>
-                <button class="btn"><a href="home.html">戻る</a></button>
+                
             </div>
         </div>
 
