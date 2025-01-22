@@ -98,7 +98,7 @@
                 gap: 10px;
                 padding: 20px;
                 background-color: #fff;
-                position: absolute;
+                position: fixed;
                 top: 60px;
                 left: 0;
                 right: 0;
@@ -329,6 +329,24 @@
 
         /* Responsive Styles */
         @media (max-width: 768px) {
+		
+	nav {
+	        display: flex;
+	        align-items: center;
+	        justify-content: space-between;
+	        color: black;
+	        position: fixed;
+	        top: 0;
+	        left: 0;
+	        right: 0;
+	        background-color: white;
+	        overflow: hidden;
+	        transition: height 0.3s;
+	        z-index: 999;
+	        height: 70px;
+	        padding: 22px;
+	    }
+		
             .main-content {
                 flex-direction: column;
                 gap: 40px;
@@ -429,7 +447,7 @@
 <body>
     <header>
         <nav>
-            <div class="logo"><img src="images/vitallogo.svg" alt=""></div>
+            <div class="logo"><a href="home.html"><span class="material-symbols-outlined">arrow_back</span></a></div>
             <div class="hamburger" onclick="toggleMenu()">
                 <div></div>
                 <div></div>
@@ -445,7 +463,6 @@
     </header>
 
 	<h1 class="title">
-			<a href="home.html"><span class="material-symbols-outlined">arrow_back</span></a>
 			<span class="title-heading">血圧を管理!</span>
 	</h1>
 
