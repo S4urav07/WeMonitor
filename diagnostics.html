@@ -138,7 +138,7 @@
         margin-bottom: 30px;
     }
 
-    .diagnostics-list {
+     .diagnostics-list {
         display: flex;
         flex-direction: column;
         gap: 15px;
@@ -153,28 +153,63 @@
         cursor: pointer;
         transition: transform 0.2s;
         background-color: white;
+				
     }
+	
+	.task-item {
+		    display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: transform 0.2s;
+        background-color: white;
+				transform: translateX(10px);
+		
+	}
+	
+	
+	.task-item:hover, completed {
+			background-color: #96E2F1;
+	}
 
     .diagnostic-item:hover {
         transform: translateX(10px);
         background-color: white;
     }
+	
+		
 
     .item-content {
         display: flex;
         align-items: center;
         gap: 15px;
     }
+	
+		
 
     .icon {
-        width: 40px;
+        width: 30px;
+        height: 30px;
+        background: white;
+        border-radius: 50%;
+				border: 1px solid #A3A3A3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+	
+	.icon-task {
+		 		width: 40px;
         height: 40px;
         background: white;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-    }
+		
+	}
 
     .item-title {
         font-size: 1.2rem;
@@ -194,6 +229,7 @@
         border: none;
         cursor: pointer;
     }
+
 
     /* Color variants for different metrics */
     .blood-pressure:hover {
@@ -247,66 +283,75 @@
     </nav>
 
     <div class="container">
-        <h1>Diagnostics</h1>
+        <h1>My Tasks</h1>
         <div class="diagnostics-list">
+            <!-- Add New Task Button -->
             <div class="diagnostic-item blood-pressure">
                 <div class="item-content">
-                    <div class="icon"><span class="material-symbols-outlined">
-                        cardiology
-                    </span></div>
-                    <div class="item-title">Blood Pressure</div>
+                    <div class="icon-task"><span class="material-symbols-outlined">add_task</span></div>
+                    <div class="item-title">Add a new task</div>
                 </div>
-                <button class="add-button">+</button>
+                <button class="add-button" onclick="addNewTask()">+</button>
             </div>
 
-            <div class="diagnostic-item glucose">
+            <!-- Tasks list will be inserted here dynamically -->
+            <div id="task-list"></div>
+
+            <!-- Completed tasks section -->
+            <div class="diagnostic-item blood-pressure">
                 <div class="item-content">
-                    <div class="icon"><span class="material-symbols-outlined">
-                        glucose
-                    </span></div>
-                    <div class="item-title">Glucose</div>
+                    <div class="icon-task"><span class="material-symbols-outlined">done_all</span></div>
+                    <div class="item-title">Completed</div>
                 </div>
-                <button class="add-button">+</button>
             </div>
-
-            <div class="diagnostic-item sleep">
-                <div class="item-content">
-                    <div class="icon"><span class="material-symbols-outlined">
-                        bedtime
-                    </span></div>
-                    <div class="item-title">Sleep</div>
-                </div>
-                <button class="add-button">+</button>
-            </div>
-
-            <a href="weight3.html" class="diagnostic-item body-weight">
-                <div class="item-content">
-                    <div class="icon"><span class="material-symbols-outlined">
-                        monitor_weight
-                    </span></div>
-                    <div class="item-title">Body Weight</div>
-                </div>
-                <button class="add-button">+</button>
-            </a>
-
-            <a href="temperatureform.html" class="diagnostic-item body-temperature">
-                <div class="item-content">
-                    <div class="icon"><span class="material-symbols-outlined">
-                        device_thermostat
-                    </span></div>
-                    <div class="item-title">Body Temperature</div>
-                </div>
-                <button class="add-button">+</button>
-            </a>
+            <div id="completed-list"></div>
         </div>
     </div>
 
     <script>
+        // Function to toggle the menu on smaller screens
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
             const hamburger = document.querySelector('.hamburger');
             navLinks.classList.toggle('show');
             hamburger.classList.toggle('open');
+        }
+
+        // Function to add a new task
+        function addNewTask() {
+            const taskTitle = prompt('Enter a new task:'); // Prompt to enter the task
+            if (taskTitle) {
+                const taskList = document.getElementById('task-list');
+
+                const taskItem = document.createElement('div');
+                taskItem.classList.add('task-item');
+                taskItem.innerHTML = `
+                    <div class="item-content">
+                        <div class="icon"><span class="material-symbols-outlined">check_box_outline_blank</span></div>
+                        <div class="item-title">${taskTitle}</div>
+                    </div>
+                `;
+                taskItem.onclick = function () {
+                    markAsCompleted(taskItem);
+                };
+
+                taskList.appendChild(taskItem);
+            }
+        }
+
+        // Function to mark a task as completed
+        function markAsCompleted(taskItem) {
+            const completedList = document.getElementById('completed-list');
+            const completedItem = document.createElement('div');
+            completedItem.classList.add('task-item', 'completed');
+            completedItem.innerHTML = `
+                <div class="item-content">
+                    <div class="icon"><span class="material-symbols-outlined">check_box</span></div>
+                    <div class="item-title">${taskItem.querySelector('.item-title').innerText}</div>
+                </div>
+            `;
+            completedList.appendChild(completedItem);
+            taskItem.remove(); // Remove task from the main list
         }
     </script>
 </body>
