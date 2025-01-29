@@ -568,7 +568,7 @@
     </div>
     
     <!-- Hidden summary display for morning, noon, and night -->
-    <div class="answer-display" id="answer-display"></div>
+    
 </div>
 	    
     </main>
@@ -602,18 +602,28 @@
             hamburger.classList.toggle('open');
         }
 			 // Store the states of whether each medicine time is checked or not
-    let medicineCheck = {
-        morning: false,
-        noon: false,
-        night: false
-    };
-			
-			
-			// Function to toggle the check for each time period
-    function toggleMedicineCheck(time) {
-        medicineCheck[time] = !medicineCheck[time];
-        updateAnswerDisplay();
-    }
+					let medicineCheck = {
+							morning: false,
+							noon: false,
+							night: false
+					};
+
+					// Function to toggle the check for each time period
+					function toggleMedicineCheck(time) {
+							medicineCheck[time] = !medicineCheck[time]; // Toggle the state
+
+							// Get the button element for the selected time
+							const button = document.querySelector(`button[onclick="toggleMedicineCheck('${time}')"]`);
+
+							// Change the background color based on the state
+											if (medicineCheck[time]) {
+								button.style.backgroundColor = "#F1EF96"; // Light yellow when checked
+						} else {
+								button.style.backgroundColor = "black"; // Black when unchecked
+								button.style.color = "white"; // Ensure the text is visible on black background
+						}
+					}
+
 			
 			 // Function to update the answer display based on selected times
     function updateAnswerDisplay() {
