@@ -186,6 +186,24 @@
         .date-list {
             width: 180px;
         }
+			
+	.date-list-container {
+		background-color: #F8F9FF; /* Light background similar to the button's */
+		padding: 20px; /* Optional padding to create some spacing around the list */
+		border-radius: 12px; /* Rounded corners */
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional subtle shadow */
+		max-height: 300px; /* Restrict the height to make it scrollable */
+		overflow-y: auto; /* Enable vertical scrolling when the content exceeds the max height */
+		-ms-overflow-style: none; /* For Internet Explorer and Edge */
+		scrollbar-width: none;		
+	}
+
+	.date-list {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
 
         .date-button {
             width: 100%;
@@ -193,22 +211,22 @@
             margin-bottom: 10px;
             border: none;
             border-radius: 12px;
-            background-color: #fffee6;
+            background-color: #E8F0FE;
             text-align: left;
             cursor: pointer;
         }
 
         .date-button.active {
-            background-color: #F1EF96;
+            background-color: #A4C6FF;
         }
 
         .date {
-            font-size: 18px;
+            font-size: 21px;
             font-weight: bold;
         }
 
         .time {
-            font-size: 14px;
+            font-size: 16px;
             color: #666;
         }
 
@@ -356,13 +374,27 @@
                 gap: 40px;
             }
 
+	　　.date-list-container {
+		overflow-x: auto;
+	　　}
+
             .date-list {
+                width: 115%;
+                max-width: 500px;
+                margin: 0 auto;
+                display: flex;
+                gap: 14px;
+		flex-direction: row; 
+            }
+
+
+            /*.date-list {
                 width: 100%;
                 max-width: 500px;
                 margin: 0 auto;
                 display: flex;
 		gap: 14px
-            }
+            } */
 
             .weight-display {
                 margin-left: 0;
@@ -471,24 +503,28 @@
 	</h1>
 
     <main class="main-content">
-        <div class="date-list">
-            <button class="date-button">
-                <div class="date">8 火</div>
-                <div class="time">10:14 am</div>
-            </button>
-            <button class="date-button active">
-                <div class="date">9 水</div>
-                <div class="time">10:14 am</div>
-            </button>
-            <button class="date-button">
-                <div class="date">10 木</div>
-                <div class="time">10:14 am</div>
-            </button>
-            <button class="date-button">
-                <div class="date">11 金</div>
-                <div class="time">10:14 am</div>
-            </button>
-        </div>
+        <div class="date-list-container">
+		<div class="date-list">
+				<button class="date-button">
+						<div class="date">8 火</div>
+						<div class="time">10:14 am</div>
+				</button>
+				<button class="date-button active">
+						<div class="date">9 水</div>
+						<div class="time">10:14 am</div>
+				</button>
+				<button class="date-button">
+						<div class="date">10 木</div>
+						<div class="time">10:14 am</div>
+				</button>
+				<button class="date-button">
+						<div class="date">11 金</div>
+						<div class="time">10:14 am</div>
+				</button>
+				<!-- Add more buttons if needed -->
+		</div>
+	</div>
+
 
         <div class="weight-display">
             <div class="gauge-container">
