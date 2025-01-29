@@ -13,7 +13,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family:  -apple-system, BlinkMacSystemFont, 'Ubuntu', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
         a {
@@ -425,6 +425,65 @@
                 padding: 12px 24px;
             }
         }
+			
+			
+			.weight-goal-display {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 20px;
+    background-color: #F8F9FF; /* Light background color */
+    border-radius: 12px; /* Rounded corners */
+    border: 2px solid #A4C6FF; /* Border similar to the buttons */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional subtle shadow */
+    margin-top: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.weight-goal-display h2 {
+    font-size: 23px;
+    margin-bottom: 15px;
+}
+
+.weight-goal-container {
+    display: flex;
+    gap: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #000;
+}
+
+.weight-goal-value {
+    font-size: 48px;
+}
+
+.weight-goal-unit {
+    font-size: 24px;
+    color: #666;
+		margin-top: 26px;
+}
+
+	.weight-goal-input {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+#goal-input {
+    padding: 10px;
+    font-size: 16px;
+    width: 80px;
+    border: 2px solid #A4C6FF;
+    border-radius: 8px;
+}
+
+
+
+
     </style>
 </head>
 <body>
@@ -472,7 +531,7 @@
 							<!-- Add more buttons if needed -->
 					</div>
 			</div>
-
+			<div class="general-display-container"></div>
         <div class="weight-display">
             <div class="gauge-container">
                 <svg class="gauge" viewBox="0 0 200 120">
@@ -497,17 +556,40 @@
                 
             </div>
         </div>
+			
+			
+
 
         <!-- Appetite Question Card -->
         <div class="appetite-display">
             <h2>食欲低下？</h2>
             <div class="appetite-button">
-                <button class="btn" onclick="showAnswer('有', this)">あり</button>
-                <button class="btn" onclick="showAnswer('無', this)">なし</button>
+                <button class="btn" onclick="showAnswer('有', this)"><span class="material-symbols-outlined">
+circle
+</span></button>
+                <button class="btn" onclick="showAnswer('無', this)"><span class="material-symbols-outlined">
+close
+</span></button>
             </div>
             <!-- Hidden answer display -->
             <div class="answer-display" id="answer-display"></div>
         </div>
+			
+			<!-- Weight Goal Card -->
+			<div class="weight-goal-display">
+					<h2>目標体重</h2>
+					<div class="weight-goal-container">
+							<span class="weight-goal-value" id="goal-weight">55</span>
+							<span class="weight-goal-unit">kg</span>
+					</div>
+
+					<!-- Input and button to change weight goal -->
+					<div class="weight-goal-input">
+							<input type="number" id="goal-input" placeholder="新しい目標体重" />
+							<button class="btn" onclick="updateGoalWeight()">更新</button>
+					</div>
+			</div>
+			
     </main>
 
     <div class="tips-box">
@@ -516,6 +598,23 @@
     </div>
 
     <script>
+			
+			// Function to update the weight goal
+function updateGoalWeight() {
+    const goalInput = document.getElementById('goal-input').value; // Get the value entered by the user
+    const goalWeightDisplay = document.getElementById('goal-weight'); // Get the element that displays the goal weight
+
+    // Check if the input is a valid number and update the displayed weight goal
+    if (goalInput && !isNaN(goalInput) && goalInput > 0) {
+        goalWeightDisplay.textContent = goalInput; // Update the displayed weight goal
+        document.getElementById('goal-input').value = ''; // Clear the input field after update
+    } else {
+        alert('有効な体重目標を入力してください。'); // Show an alert if input is invalid
+    }
+}
+
+			
+			
         document.querySelectorAll('.date-button').forEach(button => {
             button.addEventListener('click', () => {
                 document.querySelectorAll('.date-button').forEach(b => 
