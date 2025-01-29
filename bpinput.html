@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <title>Weight Dashboard</title>
     <style>
         * {
             box-sizing: border-box;
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family:  -apple-system, BlinkMacSystemFont, 'Ubuntu', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             margin: 0;
             padding: 0;
         }
@@ -16,6 +23,7 @@
             align-items: center;
             justify-content: center;
             padding: 1rem;
+            margin: 0;
         }
 
         .card {
@@ -25,6 +33,7 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 28rem;
+            transition: all 0.3s ease;
         }
 
         .header {
@@ -32,6 +41,7 @@
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 1.5rem;
+            margin-top: 3.5rem;
         }
 
         .header-icon {
@@ -41,7 +51,7 @@
         }
 
         .title {
-            font-size: 1.5rem;
+            font-size: 2.5rem;
             font-weight: bold;
         }
 
@@ -115,7 +125,7 @@
         .check-button {
             width: 100%;
             padding: 0.75rem;
-            background-color: #2563eb;
+            background-color: black;
             color: white;
             border: none;
             border-radius: 0.5rem;
@@ -125,7 +135,7 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            margin-top: 2rem;
+            margin-top: 3rem;
             transition: background-color 0.2s;
         }
 
@@ -159,15 +169,30 @@
             background-color: #fee2e2;
             color: #991b1b;
         }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 768px) {
+            body {
+                height: 100vh; /* Ensure body takes up the full viewport height */
+                width: 100vw; /* Ensure body takes up the full viewport width */
+                padding: 0;   /* Remove padding to take advantage of full screen */
+            }
+
+            .card {
+                width: 90%;  /* Adjust the width of the card on mobile */
+                height: 90%; /* Make the card take up 90% of the screen height */
+                max-width: none; /* Remove the max-width restriction */
+                max-height: none; /* Remove any max-height for flexibility */
+                margin: 0 auto; /* Ensure it stays centered */
+            }
+        }
     </style>
 </head>
 <body>
     <div class="card">
         <div class="header">
-            <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-            </svg>
-            <h1 class="title">Blood Pressure Input</h1>
+            
+            <h1 class="title">血圧入力</h1>
         </div>
 
         <div class="input-section">
@@ -237,10 +262,8 @@
         </div>
 
         <button class="check-button" onclick="checkReading()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
-            <span>Check Reading</span>
+            
+            <span>保存</span>
         </button>
 
         <div class="result" id="result"></div>
