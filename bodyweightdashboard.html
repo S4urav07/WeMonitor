@@ -277,6 +277,7 @@
             cursor: pointer;
             font-size: 16px;
             min-width: 160px;
+						box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .appetite-display {
@@ -475,8 +476,8 @@
         <div class="appetite-display">
             <h2>食欲低下？</h2>
             <div class="appetite-button">
-                <button class="btn" onclick="showAnswer('有')">あり</button>
-                <button class="btn" onclick="showAnswer('無')">なし</button>
+                <button class="btn" onclick="showAnswer('有', this)">あり</button>
+                <button class="btn" onclick="showAnswer('無', this)">なし</button>
             </div>
             <!-- Hidden answer display -->
             <div class="answer-display" id="answer-display"></div>
@@ -497,12 +498,22 @@
             });
         });
 
-        // Function to show the answer
-        function showAnswer(answer) {
-            const answerDisplay = document.getElementById('answer-display');
-            answerDisplay.style.display = 'block'; // Show the answer
-            answerDisplay.textContent = `選んでたは: ${answer}`;
-        }
+        // Function to show the answer and change the button color to white
+    function showAnswer(answer, button) {
+        // Change the button color to white
+        button.style.backgroundColor = 'white';
+        button.style.color = 'black'; // To make text visible
+
+        // Optionally, you can change the style of the other button as well
+        const otherButton = document.querySelectorAll('.appetite-button .btn');
+        otherButton.forEach(b => {
+            if (b !== button) {
+                b.style.backgroundColor = ''; // Reset other button's color
+                b.style.color = ''; // Reset other button's color
+            }
+        });
+			
+		}
 
         //hamburger menu
         function toggleMenu() {
