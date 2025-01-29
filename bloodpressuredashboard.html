@@ -13,7 +13,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family:  -apple-system, BlinkMacSystemFont, 'Ubuntu', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
         a {
@@ -287,16 +287,15 @@
         }
 
         .btn {
-		margin: 10px 0 0 0;
-		padding: 15px 30px;
-		border: none;
-		border-radius: 25px;
-		background-color: #000;
-		color: white;
-		cursor: pointer;
-		font-size: 16px;
-		min-width: 160px;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+					 	margin: 10px 0 0 0;
+						padding: 15px 30px;
+						border: none;
+						border-radius: 25px;
+						background-color: #000;
+						color: white;
+						cursor: pointer;
+						font-size: 16px;
+						min-width: 160px;
         }
 
         .appetite-display {
@@ -602,31 +601,31 @@
             navLinks.classList.toggle('show');
             hamburger.classList.toggle('open');
         }
-			 // Store the states of whether each medicine time is checked or not
-					let medicineCheck = {
-							morning: false,
-							noon: false,
-							night: false
-					};
+ 		// Store the states of whether each medicine time is checked or not
+		let medicineCheck = {
+				morning: false,
+				noon: false,
+				night: false
+		};
 
-					// Function to toggle the check for each time period
-					function toggleMedicineCheck(time) {
-							medicineCheck[time] = !medicineCheck[time]; // Toggle the state
+		// Function to toggle the check for each time period
+		function toggleMedicineCheck(time) {
+				medicineCheck[time] = !medicineCheck[time]; // Toggle the state
 
-							// Get the button element for the selected time
-							const button = document.querySelector(`button[onclick="toggleMedicineCheck('${time}')"]`);
+				// Get the button element for the selected time
+				const button = document.querySelector(`button[onclick="toggleMedicineCheck('${time}')"]`);
 
-							// Change the background color based on the state
-											if (medicineCheck[time]) {
-								button.style.backgroundColor = "#F1EF96"; // Light yellow when checked
-						} else {
-								button.style.backgroundColor = "black"; // Black when unchecked
-								button.style.color = "white"; // Ensure the text is visible on black background
-						}
-					}
+				// Change the background color based on the state
+								if (medicineCheck[time]) {
+					button.style.backgroundColor = "#F1EF96"; // Light yellow when checked
+			} else {
+					button.style.backgroundColor = "black"; // Black when unchecked
+					button.style.color = "white"; // Ensure the text is visible on black background
+			}
+		}
 
 			
-			 // Function to update the answer display based on selected times
+ 	// Function to update the answer display based on selected times
     function updateAnswerDisplay() {
         const answerDisplay = document.getElementById('answer-display');
         let summary = '服薬チェック結果: <br>';
