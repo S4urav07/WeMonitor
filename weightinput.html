@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .weight-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 400px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin: 0;
+        }
+
+        .unit-toggle {
+            background: #f3f4f6;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .unit-toggle:hover {
+            background: #e5e7eb;
+        }
+
+        .weight-display {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2563eb;
+            margin: 1.5rem 0;
+            transition: transform 0.2s;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-large {
+            width: 56px;
+            height: 56px;
+            font-size: 1.25rem;
+        }
+
+        .btn-small {
+            width: 36px;
+            height: 36px;
+            font-size: 0.9rem;
+        }
+
+        .btn-minus {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .btn-minus:hover {
+            background: #fecaca;
+        }
+
+        .btn-plus {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .btn-plus:hover {
+            background: #bbf7d0;
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: background 0.2s;
+        }
+
+        .save-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .history {
+            margin-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 1rem;
+        }
+
+        .history h3 {
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+            color: #4b5563;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            background: #f9fafb;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .history-item:hover {
+            background: #f3f4f6;
+        }
+
+        @keyframes bump {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .bump {
+            animation: bump 0.2s;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 480px) {
+            .weight-card {
+                padding: 1rem;
+                height: 100vh;
+                width: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .title {
+                font-size: 3.1rem;
+            }
+
+            .weight-display {
+                font-size: 4.5rem;
+                margin: 3rem 0;
+            }
+
+            .btn-large {
+                width: 72px;
+                height: 72px;
+                font-size: 1.1rem;
+            }
+
+            .btn-small {
+                width: 45px;
+                height: 45px;
+                font-size: 0.8rem;
+            }
+
+            .save-btn {
+                font-size: 0.9rem;
+                padding: 1rem;
+            }
+
+            .history-item {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="weight-card">
+        <div class="weight-container">
+        <div class="header">
+            <h1 class="title">体重入力</h1>
+            <button class="unit-toggle" id="unitToggle">KG</button>
+        </div>
+
+        <div class="weight-display" id="weightDisplay">70.0</div>
+
+        <div class="buttons-container">
+            <div class="button-group">
+                <button class="btn btn-large btn-minus" onclick="adjustWeight(-1.0)">-</button>
+                <button class="btn btn-large btn-plus" onclick="adjustWeight(1.0)">+</button>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-small btn-minus" onclick="adjustWeight(-0.1)">-</button>
+                <button class="btn btn-small btn-plus" onclick="adjustWeight(0.1)">+</button>
+            </div>
+            <button class="save-btn" onclick="saveReading()">保存</button>
+        </div>
+
+        <div class="history" id="history"></div>
+    </div>
+    </div>
+
+    <script>
+        let weight = 70.0;
+        let isKg = true;
+        const history = [];
+
+        function updateDisplay() {
+            const display = document.getElementById('weightDisplay');
+            display.textContent = weight.toFixed(1);
+            display.classList.add('bump');
+            setTimeout(() => display.classList.remove('bump'), 200);
+        }
+
+        function adjustWeight(amount) {
+            weight = parseFloat((weight + amount).toFixed(1));
+            updateDisplay();
+        }
+
+        function toggleUnit() {
+            const unitBtn = document.getElementById('unitToggle');
+            if (isKg) {
+                weight = parseFloat((weight * 2.20462).toFixed(1));
+                unitBtn.textContent = 'LBS';
+            } else {
+                weight = parseFloat((weight / 2.20462).toFixed(1));
+                unitBtn.textContent = 'KG';
+            }
+            isKg = !isKg;
+            updateDisplay();
+        }
+
+        function saveReading() {
+            const reading = {
+                weight: weight.toFixed(1),
+                unit: isKg ? 'kg' : 'lbs',
+                date: new Date().toLocaleString()
+            };
+            history.unshift(reading);
+            updateHistory();
+        }
+
+        function updateHistory() {
+            const historyDiv = document.getElementById('history');
+            if (history.length === 0) {
+                historyDiv.style.display = 'none';
+                return;
+            }
+
+            historyDiv.style.display = 'block';
+            historyDiv.innerHTML = '<h3>History</h3>';
+            
+            history.forEach(reading => {
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                item.innerHTML = `
+                    <span>${reading.date}</span>
+                    <strong>${reading.weight} ${reading.unit}</strong>
+                `;
+                historyDiv.appendChild(item);
+            });
+        }
+
+        // Event Listeners
+        document.getElementById('unitToggle').addEventListener('click', toggleUnit);
+    </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>
