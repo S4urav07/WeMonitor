@@ -1,249 +1,272 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>体温トラッカー</title>
 <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
- 
-        body {
-            padding: 20px;
-            background-color: #f5f5f5;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
- 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
- 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
- 
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
- 
-        .nav-links a {
-            text-decoration: none;
-            color: #000;
-            font-weight: 500;
-        }
- 
+    :root {
+        --primary-color: #F19696;
+        --secondary-color: #F19696;
+        --bg-dark: #FFFFFF;  /* Changed background to white */
+        --bg-card: #FFFFFF;  /* Card background also white */
+        --text-primary: #333333;  /* Darker text for better visibility */
+        --text-secondary: #94A3B8;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, 'Ubuntu', Roboto, Oxygen, Cantarell, sans-serif;
+    }
+
+    body {
+        background: var(--bg-dark);
+        color: var(--text-primary);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .container {
+        background: var(--bg-card);
+        border-radius: 24px;
+        padding: 2rem;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .title {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .progress-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 100%;
+        margin: 0 auto 2rem;
+        max-width: 300px;
+    }
+
+    .progress-circle {
+        position: absolute;
+        inset: 0;
+        transform: rotate(-90deg);
+    }
+
+    .progress-circle circle {
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .time-display {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+
+    .slider-container {
+        margin: 2rem 0;
+        padding: 0 1rem;
+    }
+
+    .time-slider {
+        width: 100%;
+        -webkit-appearance: none;
+        height: 6px;
+        background: #D1D5DB;  /* Lighter slider background */
+        border-radius: 3px;
+        outline: none;
+    }
+
+    .time-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid var(--bg-card);
+        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+    }
+
+    .controls {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .control-btn {
+        background: #334155;
+        border: none;
+        color: var(--text-primary);
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .control-btn:hover {
+        background: #475569;
+        transform: translateY(-2px);
+    }
+
+    .time-label {
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+    }
+
+    .time-values {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .time-values span {
+        color: var(--primary-color);
+    }
+
+    @media (max-width: 480px) {
         .container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            padding: 1.5rem;
         }
- 
-        .temperature-carousel {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 40px auto;
+
+        .progress-container {
+            max-width: 250px;
         }
- 
-        .carousel-circle {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 15px solid #F19696;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            font-weight: bold;
-            background: white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
- 
-        .temperature-value {
-            font-size: 4rem;
-            color: #333;
-            margin-right: 10px;
-        }
- 
-        .unit {
+
+        .time-display {
             font-size: 2rem;
-            color: #666;
-            margin-top: -20px;
         }
- 
-        .control-ring {
-            position: absolute;
-            width: calc(100% + 40px);
-            height: calc(100% + 40px);
-            top: -20px;
-            left: -20px;
-            border-radius: 50%;
-            cursor: grab;
-            touch-action: none;
+
+        .control-btn {
+            width: 40px;
+            height: 40px;
         }
- 
-        .marker {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background: #ff9999;
-            border-radius: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (min-width: 768px) {
+        .container {
+            padding: 2.5rem;
         }
- 
-        .save-button {
-            margin-top: 30px;
-            padding: 15px 40px;
-            background: #000;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: transform 0.2s;
+
+        .progress-container {
+            max-width: 320px;
         }
- 
-        .save-button:hover {
-            transform: scale(1.05);
-        }
- 
-        .temperature-info {
-            text-align: center;
-            margin-top: 20px;
-            color: #666;
-        }
- 
-        @media (max-width: 768px) {
-            .temperature-carousel {
-                width: 250px;
-                height: 250px;
-            }
-        }
+    }
+	
+	.save-button a {
+		color: white;
+		text-decoration: none;
+	}
+	
+	.save-button {
+		    width: 100%;
+    padding: 0.75rem;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    transition: background-color 0.2s;
+	}
 </style>
 </head>
 <body>
-<nav>
-<div class="logo"><img src="images/vitallogo.svg" alt=""></div>
-<div class="nav-links">
-<a href="home.html">Home</a>
-<a href="diagnostics.html">Diagnostics</a>
-<a href="#">Devices</a>
-<a href="#">Settings</a>
+<div class="container">
+<h1 class="title">体温</h1>
+<div class="progress-container">
+<svg class="progress-circle" viewBox="0 0 100 100">
+<circle cx="50" cy="50" r="45" fill="none" stroke="#D1D5DB" stroke-width="8"/>
+<circle cx="50" cy="50" r="45" fill="none" stroke="#F19696" stroke-width="8" 
+                        stroke-dasharray="282.7" stroke-dashoffset="70"/>
+<defs>
+<linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" stop-color="#8B5CF6"/>
+<stop offset="100%" stop-color="#6366F1"/>
+</linearGradient>
+</defs>
+</svg>
+<div class="time-display">36.5</div>
 </div>
-</nav>
- 
-    <div class="container">
-<div class="temperature-carousel">
-<div class="carousel-circle">
-<span class="temperature-value">36.5</span>
-<span class="unit">°C</span>
+
+<div class="slider-container">
+<input type="range" class="time-slider" min="30" max="42" value="36.5" step="0.1">
 </div>
-<div class="control-ring" id="controlRing">
-<div class="marker" id="marker"></div>
+
+
+
+<div class="time-label">
+体温
+<div class="time-values">
+<span>36.0°C</span>
+<span style="color: var(--text-secondary)">-</span>
+<span>38.0°C</span>
+</div>
+	<button class="save-button">保存</button>
+	<button class="save-button"><a href="temperaturedashboard.html">戻る</a></button>
 </div>
 </div>
-<div class="temperature-info">
-            Slide around the circle to adjust temperature
-</div>
-<button class="save-button">Save Temperature</button>
-</div>
- 
-    <script>
-        const controlRing = document.getElementById('controlRing');
-        const marker = document.getElementById('marker');
-        const temperatureValue = document.querySelector('.temperature-value');
-        let isDragging = false;
-        let startAngle = 0;
-        let currentTemp = 36.5;
- 
-        function getAngle(element, event) {
-            const rect = element.getBoundingClientRect();
-            const center = {
-                x: rect.left + rect.width / 2,
-                y: rect.top + rect.height / 2
-            };
-            return Math.atan2(
-                event.clientY - center.y,
-                event.clientX - center.x
-            ) * (180 / Math.PI);
+
+<script>
+    const slider = document.querySelector('.time-slider');
+    const timeDisplay = document.querySelector('.time-display');
+    const progressCircle = document.querySelector('.progress-circle circle:nth-child(2)');
+    const circumference = 2 * Math.PI * 45;
+
+    slider.addEventListener('input', (e) => {
+        const temperature = e.target.value;
+        timeDisplay.textContent = temperature;
+        const offset = circumference - ((temperature - 30) / 12) * circumference;
+        progressCircle.style.strokeDashoffset = offset;
+
+        // Change gradient based on temperature value
+        let primaryColor = "#8B5CF6"; // Default color
+        let secondaryColor = "#6366F1"; // Default color
+        if (temperature > 38) {
+            primaryColor = "#FF0000";  // Red for high temperature
+            secondaryColor = "#FF7F7F"; // Light red
+        } else if (temperature < 36) {
+            primaryColor = "#00BFFF";  // Blue for low temperature
+            secondaryColor = "#87CEFA"; // Light blue
         }
- 
-        function updateMarkerPosition(angle) {
-            const radius = controlRing.offsetWidth / 2 - 15;
-            const radian = angle * (Math.PI / 180);
-            const x = Math.cos(radian) * radius + radius;
-            const y = Math.sin(radian) * radius + radius;
-            marker.style.left = `${x}px`;
-            marker.style.top = `${y}px`;
-        }
- 
-        function updateTemperature(deltaAngle) {
-            // Convert angle change to temperature change (0.1°C per 3 degrees of rotation)
-            const tempChange = (deltaAngle / 3) * 0.1;
-            currentTemp = Math.min(42, Math.max(35, currentTemp + tempChange));
-            temperatureValue.textContent = currentTemp.toFixed(1);
-        }
- 
-        controlRing.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            startAngle = getAngle(controlRing, e);
-        });
- 
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            const currentAngle = getAngle(controlRing, e);
-            const deltaAngle = currentAngle - startAngle;
-            updateMarkerPosition(currentAngle);
-            updateTemperature(deltaAngle);
-            startAngle = currentAngle;
-        });
- 
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-        });
- 
-        // Touch events for mobile
-        controlRing.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            startAngle = getAngle(controlRing, e.touches[0]);
-        });
- 
-        document.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            const currentAngle = getAngle(controlRing, e.touches[0]);
-            const deltaAngle = currentAngle - startAngle;
-            updateMarkerPosition(currentAngle);
-            updateTemperature(deltaAngle);
-            startAngle = currentAngle;
-        });
- 
-        document.addEventListener('touchend', () => {
-            isDragging = false;
-        });
- 
-        // Initialize marker position
-        updateMarkerPosition(0);
+
+        const gradient = `linear-gradient(90deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+        progressCircle.style.stroke = gradient;
+    });
+
+    // Initialize progress circle
+    progressCircle.style.strokeDasharray = circumference;
+    progressCircle.style.strokeDashoffset = circumference - ((36.5 - 30) / 12) * circumference;
 </script>
 </body>
 </html>
