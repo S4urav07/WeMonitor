@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <title>Blood Pressure Input</title>
+	 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-    <title>Weight Dashboard</title>
     <style>
         * {
             box-sizing: border-box;
-            font-family:  -apple-system, BlinkMacSystemFont, 'Ubuntu', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family:-apple-system, BlinkMacSystemFont, 'Ubuntu', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             margin: 0;
             padding: 0;
         }
@@ -23,7 +24,6 @@
             align-items: center;
             justify-content: center;
             padding: 1rem;
-            margin: 0;
         }
 
         .card {
@@ -32,8 +32,7 @@
             border-radius: 0.75rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 28rem;
-            transition: all 0.3s ease;
+            /*max-width: 28rem;*/
         }
 
         .header {
@@ -41,11 +40,10 @@
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 1.5rem;
-            margin-top: 3.5rem;
         }
 
         .header-icon {
-            color: #2563eb;
+            color: #black;
             width: 1.5rem;
             height: 1.5rem;
         }
@@ -86,10 +84,17 @@
 
         .controls {
             display: flex;
-            justify-content: center;
-            gap: 1rem;
             align-items: center;
+            gap: 1rem;
+            justify-content: center;
         }
+        .btn-container{
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                justify-content: center;
+
+            }
 
         .btn {
             display: flex;
@@ -107,11 +112,13 @@
         }
 
         .btn-large {
-            padding: 0.75rem;
+            width: 3rem;
+            height: 3rem;
         }
 
         .btn-small {
-            padding: 0.75rem;
+            width: 2.5rem;
+            height: 2.5rem;
         }
 
         .slider-container {
@@ -120,6 +127,20 @@
 
         input[type="range"] {
             width: 100%;
+            height: 0.5rem;
+            background: #e5e7eb;
+            border-radius: 0.25rem;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: #2563eb;
+            border-radius: 50%;
+            cursor: pointer;
         }
 
         .check-button {
@@ -129,15 +150,15 @@
             color: white;
             border: none;
             border-radius: 0.5rem;
+            font-size: 1.125rem;
             font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            margin-top: 3rem;
+            margin-top: 2rem;
             transition: background-color 0.2s;
-            font-size: 1.3rem;
         }
 
         .check-button:hover {
@@ -171,28 +192,55 @@
             color: #991b1b;
         }
 
-        /* Mobile-specific adjustments */
-        @media (max-width: 768px) {
-            body {
-                height: 100vh; /* Ensure body takes up the full viewport height */
-                width: 100vw; /* Ensure body takes up the full viewport width */
-                padding: 0;   /* Remove padding to take advantage of full screen */
+        @media (max-width: 480px) {
+            .controls {
+                flex-direction: column-reverse;
+                align-items: center;
+                gap: 1rem;
+            }
+            .btn-container{
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                justify-content: center;
+
+            }
+            .btn-opposite{
+                flex-direction: row-reverse;
+
             }
 
-            .card {
-                width: 90%;  /* Adjust the width of the card on mobile */
-                height: 90%; /* Make the card take up 90% of the screen height */
-                max-width: none; /* Remove the max-width restriction */
-                max-height: none; /* Remove any max-height for flexibility */
-                margin: 0 auto; /* Ensure it stays centered */
+            .slider-container {
+                width: 100%;
+                padding: 0 1rem;
+            }
+
+            .arrow-group {
+                display: flex;
+                gap: 0.5rem;
+            }
+          
+
+            .value-display {
+                font-size: 2.75rem;
+            }
+
+            .input-label {
+                font-size: 2.25rem;
+            }
+
+            .btn-large {
+                width: 3.5rem;
+                height: 3.5rem;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="card">
         <div class="header">
-            
+        
             <h1 class="title">血圧入力</h1>
         </div>
 
@@ -202,6 +250,8 @@
                 <span class="value-display systolic-value" id="systolicValue">120</span>
             </div>
             <div class="controls">
+                <div class="btn-container btn-opposite">
+
                 <button class="btn btn-large" onclick="adjustValue('systolic', -10)">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
@@ -212,10 +262,13 @@
                         <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
                     </svg>
                 </button>
+            </div>
                 <div class="slider-container">
-                    <input type="range" min="70" max="250" value="120" id="systolicSlider" 
-                           oninput="updateFromSlider('systolic')">
+                    <input type="range" min="70" max="250" value="120" id="systolicSlider"
+                        oninput="updateFromSlider('systolic')">
                 </div>
+                <div class="btn-container">
+
                 <button class="btn btn-small" onclick="adjustValue('systolic', 1)">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
@@ -226,6 +279,7 @@
                         <path d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
                     </svg>
                 </button>
+                </div>
             </div>
         </div>
 
@@ -235,20 +289,26 @@
                 <span class="value-display diastolic-value" id="diastolicValue">80</span>
             </div>
             <div class="controls">
-                <button class="btn btn-large" onclick="adjustValue('diastolic', -10)">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                    </svg>
+                <div class="btn-container btn-opposite">
+                    <button class="btn btn-large" onclick="adjustValue('diastolic', -10)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </button>
+                    <button class="btn btn-small" onclick="adjustValue('diastolic', -1)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                
                 </button>
-                <button class="btn btn-small" onclick="adjustValue('diastolic', -1)">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                    </svg>
-                </button>
+            </div>
                 <div class="slider-container">
                     <input type="range" min="40" max="150" value="80" id="diastolicSlider"
-                           oninput="updateFromSlider('diastolic')">
+                        oninput="updateFromSlider('diastolic')">
                 </div>
+                <div class="btn-container">
                 <button class="btn btn-small" onclick="adjustValue('diastolic', 1)">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
@@ -259,84 +319,139 @@
                         <path d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
                     </svg>
                 </button>
+                </div>
+            </div>
+        </div>
+			
+			<div class="input-section">
+            <div class="input-header">
+                <span class="input-label">Pulse</span>
+                <span class="value-display pulse-value" id="pulseValue">80</span>
+            </div>
+            <div class="controls">
+                <div class="btn-container btn-opposite">
+                    <button class="btn btn-large" onclick="adjustValue('pulse', -10)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </button>
+                    <button class="btn btn-small" onclick="adjustValue('pulse', -1)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                
+                </button>
+            </div>
+                <div class="slider-container">
+                    <input type="range" min="40" max="150" value="80" id="pulseSlider"
+                        oninput="updateFromSlider('pulse')">
+                </div>
+                <div class="btn-container">
+                <button class="btn btn-small" onclick="adjustValue('pulse', 1)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                    </svg>
+                </button>
+                <button class="btn btn-large" onclick="adjustValue('pulse', 10)">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                    </svg>
+                </button>
+                </div>
             </div>
         </div>
 
         <button class="check-button" onclick="checkReading()">
-            
-            <span>保存</span>
+              <span>保存</span>
+        </button>
+			
+			<button class="check-button"><a href=""></a>
+              <span>戻る</span>
         </button>
 
         <div class="result" id="result"></div>
     </div>
 
     <script>
-        let systolic = 120;
-        let diastolic = 80;
+    let systolic = 120;
+    let diastolic = 80;
+    let pulse = 80; // Default pulse value
 
-        function adjustValue(type, amount) {
-            if (type === 'systolic') {
-                const newValue = systolic + amount;
-                if (newValue >= 70 && newValue <= 250) {
-                    systolic = newValue;
-                    updateDisplay('systolic');
-                }
-            } else {
-                const newValue = diastolic + amount;
-                if (newValue >= 40 && newValue <= 150) {
-                    diastolic = newValue;
-                    updateDisplay('diastolic');
-                }
+    function adjustValue(type, amount) {
+        if (type === 'systolic') {
+            const newValue = systolic + amount;
+            if (newValue >= 70 && newValue <= 250) {
+                systolic = newValue;
+                updateDisplay('systolic');
             }
-            hideResult();
-        }
-
-        function updateDisplay(type) {
-            const value = type === 'systolic' ? systolic : diastolic;
-            document.getElementById(`${type}Value`).textContent = value;
-            document.getElementById(`${type}Slider`).value = value;
-        }
-
-        function updateFromSlider(type) {
-            const value = parseInt(document.getElementById(`${type}Slider`).value);
-            if (type === 'systolic') {
-                systolic = value;
-            } else {
-                diastolic = value;
+        } else if (type === 'diastolic') {
+            const newValue = diastolic + amount;
+            if (newValue >= 40 && newValue <= 150) {
+                diastolic = newValue;
+                updateDisplay('diastolic');
             }
-            updateDisplay(type);
-            hideResult();
-        }
-
-        function getBPCategory() {
-            if (systolic < 120 && diastolic < 80) {
-                return { category: 'Normal', className: 'normal' };
-            } else if (systolic < 130 && diastolic < 80) {
-                return { category: 'Elevated', className: 'elevated' };
-            } else if (systolic < 140 || diastolic < 90) {
-                return { category: 'High Blood Pressure (Stage 1)', className: 'stage1' };
-            } else {
-                return { category: 'High Blood Pressure (Stage 2)', className: 'stage2' };
+        } else if (type === 'pulse') {
+            const newValue = pulse + amount;
+            if (newValue >= 40 && newValue <= 150) {
+                pulse = newValue;
+                updateDisplay('pulse');
             }
         }
+        hideResult();
+    }
 
-        function hideResult() {
-            document.getElementById('result').style.display = 'none';
-        }
+    function updateDisplay(type) {
+        const value = (type === 'systolic') ? systolic : (type === 'diastolic') ? diastolic : pulse;
+        document.getElementById(`${type}Value`).textContent = value;
+        document.getElementById(`${type}Slider`).value = value;
+    }
 
-        function checkReading() {
-            const result = document.getElementById('result');
-            const { category, className } = getBPCategory();
-            
-            result.className = 'result ' + className;
-            result.innerHTML = `
-                <div class="font-bold text-lg mb-1">
-                    ${systolic}/${diastolic} mmHg
-                </div>
-                <div>Category: ${category}</div>
-            `;
-            result.style.display = 'block';
+    function updateFromSlider(type) {
+        const value = parseInt(document.getElementById(`${type}Slider`).value);
+        if (type === 'systolic') {
+            systolic = value;
+        } else if (type === 'diastolic') {
+            diastolic = value;
+        } else if (type === 'pulse') {
+            pulse = value;
         }
-    </script>
+        updateDisplay(type);
+        hideResult();
+    }
+
+    function getBPCategory() {
+        if (systolic < 120 && diastolic < 80) {
+            return { category: 'Normal', className: 'normal' };
+        } else if (systolic < 130 && diastolic < 80) {
+            return { category: 'Elevated', className: 'elevated' };
+        } else if (systolic < 140 || diastolic < 90) {
+            return { category: 'High Blood Pressure (Stage 1)', className: 'stage1' };
+        } else {
+            return { category: 'High Blood Pressure (Stage 2)', className: 'stage2' };
+        }
+    }
+
+    function hideResult() {
+        document.getElementById('result').style.display = 'none';
+    }
+
+    function checkReading() {
+        const result = document.getElementById('result');
+        const { category, className } = getBPCategory();
+
+        result.className = 'result ' + className;
+        result.innerHTML = `
+            <div class="reading-value">
+                ${systolic}/${diastolic} mmHg
+            </div>
+            <div>Category: ${category}</div>
+        `;
+        result.style.display = 'block';
+    }
+</script>
+
 </body>
+
 </html>
