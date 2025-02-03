@@ -7,13 +7,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-    <title>Weight Dashboard</title>
+    <title>Glucose Dashboard</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family:  -apple-system, BlinkMacSystemFont, 'Ubuntu', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
         a {
@@ -186,6 +186,24 @@
         .date-list {
             width: 180px;
         }
+			
+				.date-list-container {
+						background-color: #f5fff4; /* Light background similar to the button's */
+						padding: 20px; /* Optional padding to create some spacing around the list */
+						border-radius: 12px; /* Rounded corners */
+						box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional subtle shadow */
+						max-height: 300px; /* Restrict the height to make it scrollable */
+						overflow-y: auto; /* Enable vertical scrolling when the content exceeds the max height */
+					-ms-overflow-style: none; /* For Internet Explorer and Edge */
+  					scrollbar-width: none;		
+				}
+
+				.date-list {
+						display: flex;
+						flex-direction: column;
+						gap: 10px;
+				}
+
 
         .date-button {
             width: 100%;
@@ -193,7 +211,7 @@
             margin-bottom: 10px;
             border: none;
             border-radius: 12px;
-            background-color:  #f5fff4;
+            background-color: #eefbd8;
             text-align: left;
             cursor: pointer;
         }
@@ -277,6 +295,7 @@
             cursor: pointer;
             font-size: 16px;
             min-width: 160px;
+						box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .appetite-display {
@@ -286,9 +305,9 @@
             align-items: center;
             position: relative;
             padding: 20px;
-            background-color: #F8F9FF; /* Light background color */
+            background-color: #f5fff4; /* Light background color */
             border-radius: 12px; /* Rounded corners */
-            border: 2px solid #A4C6FF; /* Border similar to the buttons */
+            border: 2px solid #CEF196; /* Border similar to the buttons */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional subtle shadow */
             margin-top: 20px;
             width: 100%;
@@ -315,7 +334,7 @@
         }
 
         .tips-box {
-            background-color: #CEF196;
+            background-color: #f5fff4;
             padding: 20px;
             border-radius: 12px;
             margin-top: 60px;
@@ -332,13 +351,18 @@
                 flex-direction: column;
                 gap: 40px;
             }
+					
+					.date-list-container {
+						overflow-x: auto;
+					}
 
             .date-list {
-                width: 100%;
+                width: 115%;
                 max-width: 500px;
                 margin: 0 auto;
                 display: flex;
                 gap: 14px;
+							flex-direction: row; 
             }
 
             .weight-display {
@@ -401,6 +425,65 @@
                 padding: 12px 24px;
             }
         }
+			
+			
+			.weight-goal-display {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 20px;
+    background-color: #F8F9FF; /* Light background color */
+    border-radius: 12px; /* Rounded corners */
+    border: 2px solid #A4C6FF; /* Border similar to the buttons */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional subtle shadow */
+    margin-top: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.weight-goal-display h2 {
+    font-size: 23px;
+    margin-bottom: 15px;
+}
+
+.weight-goal-container {
+    display: flex;
+    gap: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #000;
+}
+
+.weight-goal-value {
+    font-size: 48px;
+}
+
+.weight-goal-unit {
+    font-size: 24px;
+    color: #666;
+		margin-top: 26px;
+}
+
+	.weight-goal-input {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+#goal-input {
+    padding: 10px;
+    font-size: 16px;
+    width: 80px;
+    border: 2px solid #A4C6FF;
+    border-radius: 8px;
+}
+
+
+
+
     </style>
 </head>
 <body>
@@ -422,51 +505,58 @@
     </header>
 
     <h1 class="title">
-    <span class="title-heading">グルコース</span> <!-- Update here -->
-</h1>
-
+			
+			<span class="title-heading">グルコース!</span>
+	</h1>
 
     <main class="main-content">
-        <div class="date-list">
-            <button class="date-button">
-                <div class="date">8 火</div>
-                <div class="time">10:14 am</div>
-            </button>
-            <button class="date-button active">
-                <div class="date">9 水</div>
-                <div class="time">10:14 am</div>
-            </button>
-            <button class="date-button">
-                <div class="date">10 木</div>
-                <div class="time">10:14 am</div>
-            </button>
-            <button class="date-button">
-                <div class="date">11 金</div>
-                <div class="time">10:14 am</div>
-            </button>
-        </div>
+        <div class="date-list-container">
+					<div class="date-list">
+							<button class="date-button">
+									<div class="date">8 火</div>
+									<div class="time">10:14 am</div>
+							</button>
+							<button class="date-button active">
+									<div class="date">9 水</div>
+									<div class="time">10:14 am</div>
+							</button>
+							<button class="date-button">
+									<div class="date">10 木</div>
+									<div class="time">10:14 am</div>
+							</button>
+							<button class="date-button">
+									<div class="date">11 金</div>
+									<div class="time">10:14 am</div>
+							</button>
+							<!-- Add more buttons if needed -->
+					</div>
+			</div>
+			<div class="general-display-container"></div>
+        <div class="weight-display">
+            <div class="gauge-container">
+               
+                <div class="weight-value-container">
+                    <span class="weight-value">100</span>
+                    <span class="weight-unit">mg/dL</span>
+                </div>
+            </div>
 
-        <div class="weight-display"> <!-- This can be renamed to glucose-display -->
-    <div class="gauge-container">
-        <svg class="gauge" viewBox="0 0 200 120">
-            <path 
-                d="M40 100 A60 60 0 0 1 160 100" 
-                fill="none" 
-                stroke="#CEF196" <!-- Change the stroke color to glucose green -->
-                stroke-width="25"
-                stroke-linecap="round"
-            />
-            <circle cx="100" cy="100" r="3" fill="white"/>
-        </svg>
-        <div class="weight-value-container">
-            <span class="weight-value">100</span> <!-- Update this for glucose -->
-            <span class="weight-unit">mg/dL</span> <!-- Change unit to mg/dL -->
+            <!-- Move the action buttons below the gauge container -->
+            <div class="action-buttons">
+                <button class="btn"><a href="glucoseinput.html">データ入力</a></button>
+                
+            </div>
         </div>
-    </div>
-    <div class="action-buttons">
-        <button class="btn"><a href="glucoseinput.html">データ入力</a></button> <!-- Update link if needed -->
-    </div>
-</div>
+			
+			
+
+
+        <!-- Appetite Question Card -->
+        
+			
+			<!-- Weight Goal Card -->
+			
+			
     </main>
 
     <div class="tips-box">
@@ -475,6 +565,23 @@
     </div>
 
     <script>
+			
+			// Function to update the weight goal
+function updateGoalWeight() {
+    const goalInput = document.getElementById('goal-input').value; // Get the value entered by the user
+    const goalWeightDisplay = document.getElementById('goal-weight'); // Get the element that displays the goal weight
+
+    // Check if the input is a valid number and update the displayed weight goal
+    if (goalInput && !isNaN(goalInput) && goalInput > 0) {
+        goalWeightDisplay.textContent = goalInput; // Update the displayed weight goal
+        document.getElementById('goal-input').value = ''; // Clear the input field after update
+    } else {
+        alert('有効な体重目標を入力してください。'); // Show an alert if input is invalid
+    }
+}
+
+			
+			
         document.querySelectorAll('.date-button').forEach(button => {
             button.addEventListener('click', () => {
                 document.querySelectorAll('.date-button').forEach(b => 
@@ -483,12 +590,22 @@
             });
         });
 
-        // Function to show the answer
-        function showAnswer(answer) {
-            const answerDisplay = document.getElementById('answer-display');
-            answerDisplay.style.display = 'block'; // Show the answer
-            answerDisplay.textContent = `選んでたは: ${answer}`;
-        }
+        // Function to show the answer and change the button color to white
+    function showAnswer(answer, button) {
+        // Change the button color to white
+        button.style.backgroundColor = 'white';
+        button.style.color = 'black'; // To make text visible
+
+        // Optionally, you can change the style of the other button as well
+        const otherButton = document.querySelectorAll('.appetite-button .btn');
+        otherButton.forEach(b => {
+            if (b !== button) {
+                b.style.backgroundColor = ''; // Reset other button's color
+                b.style.color = ''; // Reset other button's color
+            }
+        });
+			
+		}
 
         //hamburger menu
         function toggleMenu() {
@@ -500,4 +617,3 @@
     </script>
 </body>
 </html>
-
