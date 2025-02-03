@@ -1,391 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glucose Input</title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-    <title>Glucose Monitor</title>
     <style>
-        :root {
-            --primary: black;
-            --success: #16a34a;
-            --warning: #ca8a04;
-            --danger: #dc2626;
-            --background: #f8fafc;
-            --surface: #ffffff;
-            --text: #0f172a;
-            --text-secondary: black;
-            --border: #e2e8f0;
-        }
-
         * {
+            box-sizing: border-box;
+            font-family:-apple-system, BlinkMacSystemFont, 'Ubuntu', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            font-family:  -apple-system, BlinkMacSystemFont, 'Ubuntu', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #f5f5f5;
             min-height: 100vh;
-            line-height: 1.5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 1rem;
         }
 
-        .container {
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 480px;
-            background: var(--surface);
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
+            /*max-width: 28rem;*/
         }
 
         .header {
-            text-align: center;
-            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-icon {
+            color: #black;
+            width: 1.5rem;
+            height: 1.5rem;
         }
 
         .title {
-            font-size: 1.5rem;
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+            font-weight: bold;
         }
 
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
+        .input-section {
+            margin-bottom: 2rem;
         }
 
-        .glucose-display {
-            background: var(--background);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .glucose-label {
+        .input-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        .label-text {
+        .input-label {
+            font-size: 1.125rem;
             font-weight: 500;
-            color: var(--text);
         }
 
-        .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            background: var(--success);
-            color: white;
+        .value-display {
+            font-size: 1.5rem;
+            font-weight: bold;
         }
 
-        .input-group {
+        .glucose-value {
+            color: #2563eb;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-container{
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                justify-content: center;
+
+            }
+
+        .btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--surface);
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .input-group input {
-            width: 100px;
             border: none;
-            font-size: 2rem;
-            font-weight: 600;
-            text-align: right;
-            color: var(--text);
-            background: transparent;
-            outline: none;
+            border-radius: 9999px;
+            background-color: #f3f4f6;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .unit {
-            color: var(--text-secondary);
-            margin-left: 0.5rem;
+        .btn:hover {
+            background-color: #e5e7eb;
+        }
+
+        .btn-large {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .btn-small {
+            width: 2.5rem;
+            height: 2.5rem;
         }
 
         .slider-container {
-            padding: 0.5rem 0;
+            width: 6rem;
         }
 
         input[type="range"] {
-            -webkit-appearance: none;
             width: 100%;
-            height: 4px;
-            background: var(--border);
-            border-radius: 2px;
+            height: 0.5rem;
+            background: #e5e7eb;
+            border-radius: 0.25rem;
             outline: none;
-            
         }
 
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
+            appearance: none;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: #2563eb;
             border-radius: 50%;
-            background: var(--primary);
             cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-
-        .range-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
         }
 
-        .actions {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .btn {
+        .check-button {
+            width: 100%;
             padding: 0.75rem;
-            border: none;
-            border-radius: 6px;
+            background-color: black;
             color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.125rem;
             font-weight: 500;
             cursor: pointer;
-            transition: background-color 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            margin-top: 2rem;
+            transition: background-color 0.2s;
         }
 
-        .btn:hover {
-            opacity: 0.9;
+        .check-button:hover {
+            background-color: #1d4ed8;
         }
 
-        .btn-scan {
-            background: var(--success);
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            display: none;
         }
 
-        .btn-save {
-            background: var(--primary);
+        .result.normal {
+            background-color: #dcfce7;
+            color: #166534;
         }
 
-        .btn-return {
-            background: var(--text-secondary);
+        .result.elevated {
+            background-color: #fef9c3;
+            color: #854d0e;
         }
 
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(150%);
-            background: var(--text);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+        .result.stage1 {
+            background-color: #ffedd5;
+            color: #9a3412;
         }
 
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
+        .result.stage2 {
+            background-color: #fee2e2;
+            color: #991b1b;
         }
-			
-			a {
-				color: inherit;
-				text-decoration: none;
-			}
 
         @media (max-width: 480px) {
-            .container {
-                padding: 1.5rem;
+            .controls {
+                flex-direction: column-reverse;
+                align-items: center;
+                gap: 1rem;
+            }
+            .btn-container{
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                justify-content: center;
+
+            }
+            .btn-opposite{
+                flex-direction: row-reverse;
+
             }
 
-            .actions {
-                grid-template-columns: 1fr;
+            .slider-container {
+                width: 100%;
+                padding: 0 1rem;
+            }
+
+            .arrow-group {
+                display: flex;
+                gap: 0.5rem;
+            }
+          
+
+            .value-display {
+                font-size: 2.75rem;
+            }
+
+            .input-label {
+                font-size: 2.25rem;
+            }
+
+            .btn-large {
+                width: 3.5rem;
+                height: 3.5rem;
             }
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <header class="header">
-            <h1 class="title">グルコース入力</h1>
-            <p class="subtitle">Track your glucose levels</p>
-        </header>
+    <div class="card">
+        <div class="header">
+            <h1 class="title">グルコース</h1>
+        </div>
 
-        <div class="glucose-display">
-            <div class="glucose-label">
-                <span class="label-text">ライブ状況</span>
-                <span id="statusBadge" class="status-badge">普通</span>
+        <div class="input-section">
+            <div class="input-header">
+                <span class="input-label">Glucose Level</span>
+                <span class="value-display glucose-value" id="glucoseValue">90</span>
             </div>
-
-            <div class="input-group">
-                <input type="number" id="glucoseInput" min="50" max="200" value="120">
-                <span class="unit">mg/dL</span>
-            </div>
-
-            <div class="slider-container">
-                <input type="range" id="glucoseRange" min="50" max="200" value="120" step="1">
-
-                <div class="range-labels">
-                    <span>50</span>
-                    <span>200</span>
+            <div class="controls">
+                <div class="btn-container btn-opposite">
+                    <button class="btn btn-large" onclick="adjustValue('glucose', -10)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </button>
+                    <button class="btn btn-small" onclick="adjustValue('glucose', -1)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="slider-container">
+                    <input type="range" min="40" max="300" value="90" id="glucoseSlider"
+                        oninput="updateFromSlider('glucose')">
+                </div>
+                <div class="btn-container">
+                    <button class="btn btn-small" onclick="adjustValue('glucose', 1)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                        </svg>
+                    </button>
+                    <button class="btn btn-large" onclick="adjustValue('glucose', 10)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
 
-        <div class="actions">
-            <button class="btn btn-save" onclick="saveGlucose()">
-                
-                保存
-            </button>
-            <a href="home.html"><button class="btn btn-return" onclick="returnToMain()">
-                
-                戻る
-            </a></button>
-        </div>
+        <button class="check-button" onclick="checkReading()">
+              <span>保存</span>
+        </button>
+            
+        <button class="check-button"><a href="glucosedashboard.html"></a>
+              <span>戻る</span>
+        </button>
+
+        <div class="result" id="result"></div>
     </div>
 
-    <div id="toast" class="toast"></div>
-
     <script>
-        const glucoseInput = document.getElementById('glucoseInput');
-        const glucoseRange = document.getElementById('glucoseRange');
-        const statusBadge = document.getElementById('statusBadge');
-        const toast = document.getElementById('toast');
+    let glucose = 90; // Default glucose value
 
-        function updateStatus(value) {
-            let status = '';
-            let color = '';
-
-            if (value < 70) {
-                status = '低い';
-                color = 'var(--danger)';
-            } else if (value < 140) {
-                status = '普通';
-                color = 'var(--success)';
-            } else {
-                status = '高い';
-                color = 'var(--warning)';
+    function adjustValue(type, amount) {
+        if (type === 'glucose') {
+            const newValue = glucose + amount;
+            if (newValue >= 40 && newValue <= 300) {
+                glucose = newValue;
+                updateDisplay('glucose');
             }
-
-            statusBadge.textContent = status;
-            statusBadge.style.backgroundColor = color;
         }
+        hideResult();
+    }
 
-        function showToast(message) {
-            toast.textContent = message;
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+    function updateDisplay(type) {
+        const value = glucose;
+        document.getElementById(`${type}Value`).textContent = value;
+        document.getElementById(`${type}Slider`).value = value;
+    }
+
+    function updateFromSlider(type) {
+        const value = parseInt(document.getElementById(`${type}Slider`).value);
+        glucose = value;
+        updateDisplay(type);
+        hideResult();
+    }
+
+    function hideResult() {
+        document.getElementById('result').style.display = 'none';
+    }
+
+    function checkReading() {
+        const result = document.getElementById('result');
+        
+        if (glucose < 70) {
+            result.className = 'result normal';
+            result.innerHTML = `
+                <div class="reading-value">
+                    Glucose: ${glucose} mg/dL
+                </div>
+                <div>Category: Low</div>
+            `;
+        } else if (glucose < 100) {
+            result.className = 'result normal';
+            result.innerHTML = `
+                <div class="reading-value">
+                    Glucose: ${glucose} mg/dL
+                </div>
+                <div>Category: Normal</div>
+            `;
+        } else {
+            result.className = 'result elevated';
+            result.innerHTML = `
+                <div class="reading-value">
+                    Glucose: ${glucose} mg/dL
+                </div>
+                <div>Category: High</div>
+            `;
         }
-
-        glucoseRange.addEventListener('input', function() {
-            glucoseInput.value = this.value;
-            updateStatus(parseInt(this.value));
-        });
-
-        glucoseInput.addEventListener('input', function() {
-            const value = parseInt(this.value);
-            if (value >= 50 && value <= 200) {
-                glucoseRange.value = value;
-                updateStatus(value);
-            }
-        });
-
-        glucoseInput.addEventListener('blur', function() {
-            let value = parseInt(this.value);
-            if (isNaN(value)) value = 120;
-            if (value < 50) value = 50;
-            if (value > 200) value = 200;
-            this.value = value;
-            glucoseRange.value = value;
-            updateStatus(value);
-        });
-
-        function scanGlucose() {
-            showToast('Scanning glucose level...');
-            const btn = document.querySelector('.btn-scan');
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                const randomValue = Math.floor(Math.random() * (200 - 50) + 50);
-                glucoseInput.value = randomValue;
-                glucoseRange.value = randomValue;
-                updateStatus(randomValue);
-                showToast('Scan complete!');
-                btn.disabled = false;
-            }, 1500);
-        }
-
-        function saveGlucose() {
-            showToast(`Reading of ${glucoseInput.value} mg/dL saved`);
-        }
-
-        function returnToMain() {
-            showToast('Returning to dashboard...');
-        }
-
-        // Initialize status
-        updateStatus(parseInt(glucoseInput.value));
+        result.style.display = 'block';
+    }
     </script>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
+
 </body>
+
 </html>
