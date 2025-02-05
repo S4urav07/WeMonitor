@@ -234,11 +234,20 @@
                 height: 3.5rem;
             }
         }
+			
+			.back-button span {
+				color: black;
+				font-size: 37px;
+			}
     </style>
 </head>
 
 <body>
+	
     <div class="card">
+			<div class="back-button"><a href="bloodpressuredashboard.html"><span class="material-symbols-outlined">
+arrow_back
+</span></a></div>
         <div class="header">
         
             <h1 class="title">血圧入力</h1>
@@ -367,9 +376,7 @@
               <span>保存</span>
         </button>
 			
-			<button class="check-button"><a href="bloodpressuredashboard.html"></a>
-              <span>戻る</span>
-        </button>
+			
 
         <div class="result" id="result"></div>
     </div>
