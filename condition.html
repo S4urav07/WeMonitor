@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concentric Circles</title>
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .circle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            background-color: white;
+        }
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: #63d8ff;
+            opacity: 0.3;
+        }
+        .circle:nth-child(1) {
+            width: 200px;
+            height: 200px;
+        }
+        .circle:nth-child(2) {
+            width: 150px;
+            height: 150px;
+        }
+        .circle:nth-child(3) {
+            width: 100px;
+            height: 100px;
+        }
+        .circle:nth-child(4) {
+            width: 50px;
+            height: 50px;
+            opacity: 1; /* Make the innermost circle solid */
+        }
+</style>
+</head>
+<body>
+ 
+<div class="circle-container">
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+</div>
+ 
+</body>
+</html>
