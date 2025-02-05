@@ -23,6 +23,19 @@
             padding: 20px;
             background-color: #f5f5f5;
         }
+			
+			.circle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+						height: 23px;
+    				padding-right: 35px;
+    				margin-bottom: 11px;
+						width: 10px;
+            padding-left: 11px;
+        }
+			
         nav {
             display: flex;
             justify-content: space-between;
@@ -238,6 +251,20 @@
                 width: 80px;
                 height: 80px;
             }
+					
+					.circle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+						height: 23px;
+    				padding-right: 75px;
+    				margin-bottom: 11px;
+						padding-left: 18px;
+						width: 10px;
+            
+        }
+					
         }
         .card {
     position: relative; /* Ensure the heart button is positioned relative to the card */
@@ -275,6 +302,28 @@
 				transition: color 0.3s ease;
 			}
 
+			
+			
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: #63d8ff;
+            opacity: 0.3;
+        }
+        
+        .circle:nth-child(1) {
+            width: 35px;
+            height: 35px;
+        }
+        .circle:nth-child(2) {
+            width: 25px;
+            height: 25px;
+        }
+        .circle:nth-child(3) {
+            width: 15px;
+            height: 15px;
+            opacity: 1; /* Make the innermost circle solid */
+        }
     </style>
 </head>
 <body>
@@ -304,7 +353,14 @@
                     <div class="icon"><span class="material-symbols-outlined">cardiology</span></div>
                     <div>
                         <div class="card-title">血圧</div>
-                        <div class="card-subtitle">普通</div>
+                        <div class="card-subtitle">
+													<div class="circle-container">
+														
+														<div class="circle"></div>
+														<div class="circle"></div>
+														<div class="circle"></div>
+													</div>
+											</div>
                         <div class="card-subtitle">01/01</div>
                     </div>
                     	
@@ -315,17 +371,23 @@
 favorite
 </span></button>
 					</div>
-            <div class="card sleep-card"><a href="sleepdashboard.html">
+            <div class="card sleep-card">
                 <div class="card-header">
                     <div class="icon"><span class="material-symbols-outlined">bedtime</span></div>
                     <div>
                         <div class="card-title">スリープ</div>
-                        <div class="card-subtitle">良い</div>
+                        <div class="card-subtitle">
+													<div class="circle-container">
+														
+														<div class="circle"></div>
+														<div class="circle"></div>
+														<div class="circle"></div>
+													</div>
+											</div>
                         <div class="card-subtitle">01/01</div>
                     </div>
                 </div>
                 <div class="card-value">7h39m</div>
-	    </a>
 							<button class="heart-btn"><span class="material-symbols-outlined">
 favorite
 </span></button>
@@ -335,12 +397,19 @@ favorite
                     <div class="icon"><span class="material-symbols-outlined">glucose</span></div>
                     <div>
                         <div class="card-title">グルコース</div>
-                        <div class="card-subtitle">Aerobic</div>
+                        <div class="card-subtitle">
+												<div class="circle-container">
+														
+														<div class="circle"></div>
+														<div class="circle"></div>
+														<div class="circle"></div>
+													</div>
+											</div>
                         <div class="card-subtitle">01/01</div>
                     </div>
                 </div>
-                
-                <div class="card-value">120mg</div>
+                <div class="heart-rate-graph"></div>
+                <div class="card-value">120/85</div>
             </a>
 					<button class="heart-btn"><span class="material-symbols-outlined">
 favorite
@@ -351,7 +420,14 @@ favorite
                     <div class="icon"><span class="material-symbols-outlined">monitor_weight</span></div>
                     <div>
                         <div class="card-title">体重</div>
-                        <div class="card-subtitle">普通</div>
+                        <div class="card-subtitle">
+													<div class="circle-container">
+														
+														<div class="circle"></div>
+														<div class="circle"></div>
+														<div class="circle"></div>
+													</div>
+											</div>
                         <div class="card-subtitle">01/01</div>
                     </div>
                     
@@ -362,12 +438,19 @@ favorite
 favorite
 </span></button>
 					</div>
-            <div class="card bt-card"><a href="temperaturedashboard.html">
+            <div class="card bt-card"><a href="temperatureform.html">
                 <div class="card-header">
                     <div class="icon"><span class="material-symbols-outlined">device_thermostat</span></div>
                     <div>
                         <div class="card-title">体温</div>
-                        <div class="card-subtitle">Normal</div>
+                        <div class="card-subtitle">
+													<div class="circle-container">
+														
+														<div class="circle"></div>
+														<div class="circle"></div>
+														<div class="circle"></div>
+													</div>
+											</div>
                         <div class="card-subtitle">01/01</div>
                     </div>
                 </div>
@@ -382,7 +465,14 @@ favorite
                     <div class="icon"><span class="material-symbols-outlined">vital_signs</span></div>
                     <div>
                         <div class="card-title">Heart Rate</div>
-                        <div class="card-subtitle">Aerobic</div>
+                        <div class="card-subtitle">
+													<div class="circle-container">
+														
+														<div class="circle"></div>
+														<div class="circle"></div>
+														<div class="circle"></div>
+													</div>
+											</div>
                         <div class="card-subtitle">01/01</div>
                     </div>
                 </div>
